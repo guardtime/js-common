@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.0.1] - 2020-04-14
+### Added 
+- New functionality
+  - HashAlgorithm getByName is incasesensitive and allows to get
+  SHA-256 with the name of DEFAULT.
+
 ## [1.0.0] - 2020-04-08
 ### Added
 - New functionality

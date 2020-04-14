@@ -1,8 +1,8 @@
 {
   "name": "@guardtime/js-common",
   "sideEffects": false,
-  "version": "1.0.0",
-  "description": "A grab bag of common utilities, data models etc. The user of the library can use Tree Shaking to leave only the code that is used.",
+  "version": "1.0.1",
+  "description": "A grab bag of common utilities, data models and other functionality.",
   "license": "Apache-2.0",
   "main": "./lib/main.mjs",
   "types": "./lib/main.d.ts",
