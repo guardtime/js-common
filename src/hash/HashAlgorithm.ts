@@ -32,6 +32,7 @@ export default class HashAlgorithm {
   private readonly status: AlgorithmStatus;
   private readonly deprecatedSince: number | null;
   private readonly obsoleteSince: number | null;
+  private lookupNames: string[] = [];
 
   /* eslint-disable @typescript-eslint/no-use-before-define */
   /**
@@ -150,8 +151,9 @@ export default class HashAlgorithm {
    */
   static getByName(name: string): HashAlgorithm | null {
     const values = HashAlgorithm.Values();
+    const normalizedName = HashAlgorithm.normalizeName(name);
     for (const i in values) {
-      if (values[i].name === name) {
+      if (values[i].lookupNames.includes(normalizedName)) {
         return values[i];
       }
     }
@@ -188,6 +190,7 @@ export default class HashAlgorithm {
    * @param status algorithm status
    * @param deprecatedSince date from which the algorithm is deprecated
    * @param obsoleteSince date from which the algorithm is obsolete
+   * @param alternativeNames alternative names for hash algorithm lookup
    */
   constructor(
     id: number,
@@ -195,12 +198,18 @@ export default class HashAlgorithm {
     length: number,
     status: AlgorithmStatus,
     deprecatedSince: number | null = null,
-    obsoleteSince: number | null = null
+    obsoleteSince: number | null = null,
+    alternativeNames: string[] = []
   ) {
     this.id = id;
     this.name = name;
     this.length = length;
     this.status = status;
+
+    this.lookupNames.push(HashAlgorithm.normalizeName(name));
+    for (const alternativeName of alternativeNames) {
+      this.lookupNames.push(HashAlgorithm.normalizeName(alternativeName));
+    }
 
     if (deprecatedSince === null) {
       this.deprecatedSince = deprecatedSince;
@@ -275,6 +284,10 @@ export default class HashAlgorithm {
   public isImplemented(): boolean {
     return this.status !== AlgorithmStatus.NotImplemented;
   }
+
+  private static normalizeName(name: string): string {
+    return name.toLowerCase().replace(/[^a-z0-9]/g, "");
+  }
 }
 
 const SHA1 = new HashAlgorithm(
@@ -284,15 +297,39 @@ const SHA1 = new HashAlgorithm(
   AlgorithmStatus.NotTrusted,
   1467331200
 );
-const SHA2_256 = new HashAlgorithm(0x1, "SHA-256", 32, AlgorithmStatus.Normal);
+const SHA2_256 = new HashAlgorithm(
+  0x1,
+  "SHA-256",
+  32,
+  AlgorithmStatus.Normal,
+  null,
+  null,
+  ["DEFAULT", "SHA2-256", "SHA2"]
+);
 const RIPEMD160 = new HashAlgorithm(
   0x2,
   "RIPEMD160",
   20,
   AlgorithmStatus.Normal
 );
-const SHA2_384 = new HashAlgorithm(0x4, "SHA-384", 48, AlgorithmStatus.Normal);
-const SHA2_512 = new HashAlgorithm(0x5, "SHA-512", 64, AlgorithmStatus.Normal);
+const SHA2_384 = new HashAlgorithm(
+  0x4,
+  "SHA-384",
+  48,
+  AlgorithmStatus.Normal,
+  null,
+  null,
+  ["SHA2-384"]
+);
+const SHA2_512 = new HashAlgorithm(
+  0x5,
+  "SHA-512",
+  64,
+  AlgorithmStatus.Normal,
+  null,
+  null,
+  ["SHA2-512"]
+);
 const SHA3_224 = new HashAlgorithm(
   0x7,
   "SHA3-224",

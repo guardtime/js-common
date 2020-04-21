@@ -26,8 +26,8 @@ jobs:
         NPM_PACKAGE_VERSION=`node -e "const fs = require('fs'); console.log(JSON.parse(fs.readFileSync('package.json')).version);"`
         SHORT_SHA=`node -e "const sha = \"$GITHUB_SHA\"; console.log(sha.substring(0, 7));"`
         npm run mjs
-        npm --no-git-tag-version version $NPM_PACKAGE_VERSION-$SHORT_SHA
-        npm publish --access public
+        npm --no-git-tag-version  version $NPM_PACKAGE_VERSION-rc.$SHORT_SHA
+        npm publish --access public --tag dev
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH }}
         CI: true

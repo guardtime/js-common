@@ -1,2 +1,2 @@
-# @guardtime/js-common
+# @guardtime/common
 Common utilities used for javascript projects.
