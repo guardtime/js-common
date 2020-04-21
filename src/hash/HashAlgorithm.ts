@@ -193,13 +193,14 @@ export default class HashAlgorithm {
    * @param alternativeNames alternative names for hash algorithm lookup
    */
   constructor(
-      id: number,
-      name: string,
-      length: number,
-      status: AlgorithmStatus,
-      deprecatedSince: number | null = null,
-      obsoleteSince: number | null = null,
-      alternativeNames: string[] = []) {
+    id: number,
+    name: string,
+    length: number,
+    status: AlgorithmStatus,
+    deprecatedSince: number | null = null,
+    obsoleteSince: number | null = null,
+    alternativeNames: string[] = []
+  ) {
     this.id = id;
     this.name = name;
     this.length = length;
@@ -285,17 +286,72 @@ export default class HashAlgorithm {
   }
 
   private static normalizeName(name: string) {
-    return name.toLowerCase().replace(/[^a-z0-9]/g, '');
+    return name.toLowerCase().replace(/[^a-z0-9]/g, "");
   }
 }
 
-const SHA1 = new HashAlgorithm(0x0, "SHA-1", 20, AlgorithmStatus.NotTrusted, 1467331200);
-const SHA2_256 = new HashAlgorithm(0x1, "SHA-256", 32, AlgorithmStatus.Normal, null, null, ['DEFAULT', 'SHA2-256', 'SHA2']);
-const RIPEMD160 = new HashAlgorithm(0x2, "RIPEMD160", 20, AlgorithmStatus.Normal);
-const SHA2_384 = new HashAlgorithm(0x4, "SHA-384", 48, AlgorithmStatus.Normal, null, null, ["SHA2-384"]);
-const SHA2_512 = new HashAlgorithm(0x5, "SHA-512", 64, AlgorithmStatus.Normal, null, null, ["SHA2-512"]);
-const SHA3_224 = new HashAlgorithm(0x7, "SHA3-224", 28, AlgorithmStatus.NotImplemented);
-const SHA3_256 = new HashAlgorithm(0x8, "SHA3-256", 32, AlgorithmStatus.NotImplemented);
-const SHA3_384 = new HashAlgorithm(0x9, "SHA3-384", 48, AlgorithmStatus.NotImplemented);
-const SHA3_512 = new HashAlgorithm(0xa, "SHA3-512", 64, AlgorithmStatus.NotImplemented);
+const SHA1 = new HashAlgorithm(
+  0x0,
+  "SHA-1",
+  20,
+  AlgorithmStatus.NotTrusted,
+  1467331200
+);
+const SHA2_256 = new HashAlgorithm(
+  0x1,
+  "SHA-256",
+  32,
+  AlgorithmStatus.Normal,
+  null,
+  null,
+  ["DEFAULT", "SHA2-256", "SHA2"]
+);
+const RIPEMD160 = new HashAlgorithm(
+  0x2,
+  "RIPEMD160",
+  20,
+  AlgorithmStatus.Normal
+);
+const SHA2_384 = new HashAlgorithm(
+  0x4,
+  "SHA-384",
+  48,
+  AlgorithmStatus.Normal,
+  null,
+  null,
+  ["SHA2-384"]
+);
+const SHA2_512 = new HashAlgorithm(
+  0x5,
+  "SHA-512",
+  64,
+  AlgorithmStatus.Normal,
+  null,
+  null,
+  ["SHA2-512"]
+);
+const SHA3_224 = new HashAlgorithm(
+  0x7,
+  "SHA3-224",
+  28,
+  AlgorithmStatus.NotImplemented
+);
+const SHA3_256 = new HashAlgorithm(
+  0x8,
+  "SHA3-256",
+  32,
+  AlgorithmStatus.NotImplemented
+);
+const SHA3_384 = new HashAlgorithm(
+  0x9,
+  "SHA3-384",
+  48,
+  AlgorithmStatus.NotImplemented
+);
+const SHA3_512 = new HashAlgorithm(
+  0xa,
+  "SHA3-512",
+  64,
+  AlgorithmStatus.NotImplemented
+);
 const SM3 = new HashAlgorithm(0xb, "SM3", 32, AlgorithmStatus.NotImplemented);

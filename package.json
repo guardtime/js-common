@@ -1,7 +1,7 @@
 {
-  "name": "@guardtime/js-common",
+  "name": "@guardtime/common",
   "sideEffects": false,
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "A grab bag of common utilities, data models and other functionality.",
   "license": "Apache-2.0",
   "main": "./lib/main.mjs",
