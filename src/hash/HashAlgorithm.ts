@@ -285,7 +285,7 @@ export default class HashAlgorithm {
     return this.status !== AlgorithmStatus.NotImplemented;
   }
 
-  private static normalizeName(name: string) {
+  private static normalizeName(name: string): string {
     return name.toLowerCase().replace(/[^a-z0-9]/g, "");
   }
 }
