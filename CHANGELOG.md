@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.0.1] - 2020-04-28
+### Fixed
+- Node HMAC calculation
+
 ## [1.0.0] - 2020-04-08
 ### Added
 - New functionality
@@ -26,4 +30,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
     SHA-256 with the name of DEFAULT.
 
 [Unreleased]: https://github.com/guardtime/js-common/tree/master
-[1.0.0]: https://github.com/guardtime/js-common/tree/1.0.0
+[1.0.0]: https://github.com/guardtime/js-common/tree/v1.0.0
+[1.0.1]: https://github.com/guardtime/js-common/tree/v1.0.1
