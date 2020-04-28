@@ -1,6 +1,5 @@
 import * as crypto from "crypto";
 import HashAlgorithm from "../hash/HashAlgorithm";
-import ASCIIConverter from "../strings/ASCIIConverter";
 import { HashingError } from "../hash/HashingError";
 
 export default class NodeHMAC {
@@ -24,7 +23,7 @@ export default class NodeHMAC {
     try {
       const hmacHasher = crypto.createHmac(
         algorithm.name.replace("-", ""),
-        ASCIIConverter.ToString(key)
+        key
       );
       hmacHasher.update(Buffer.from(data));
       return new Uint8Array(hmacHasher.digest());
