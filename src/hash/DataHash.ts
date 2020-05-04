@@ -67,7 +67,7 @@ export default class DataHash {
   }
 
   /**
-   * Test is object is with imprint.
+   * Test if object is with imprint.
    * @param obj Object to test.
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
