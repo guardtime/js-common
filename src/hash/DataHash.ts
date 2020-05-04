@@ -46,17 +46,14 @@ export default class DataHash {
   }
 
   /**
+   * Test equality of 2 objects as DataHash.
    * @param {DataHash} x
    * @param {DataHash} y
    * @returns {boolean}
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static equals(x: any, y: any): boolean {
-    if (!(x instanceof DataHash) || !(y instanceof DataHash)) {
-      return false;
-    }
-
-    if (x.imprint.length != y.imprint.length) {
+    if (!DataHash.isDataHash(x) || !DataHash.isDataHash(y)) {
       return false;
     }
 
@@ -67,6 +64,20 @@ export default class DataHash {
     }
 
     return true;
+  }
+
+  /**
+   * Test is object is with imprint.
+   * @param obj Object to test.
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private static isDataHash(obj: any): boolean {
+    return (
+      typeof obj === "object" &&
+      obj !== null &&
+      Object.prototype.hasOwnProperty.call(obj, "imprint") &&
+      ArrayBuffer.isView(obj.imprint)
+    );
   }
 
   toString(): string {
