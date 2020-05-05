@@ -1,5 +1,6 @@
 /*eslint no-use-before-define: ["error", { "variables": false }]*/
 import { HashingError } from "./HashingError";
+import { IHashAlgorithm } from "./IHashAlgorithm";
 
 /**
  * HashAlgorithm Status enum.
@@ -221,6 +222,7 @@ export default class HashAlgorithm {
     }
 
     this.obsoleteSince = obsoleteSince;
+    Object.freeze(this);
   }
 
   /**
@@ -285,6 +287,61 @@ export default class HashAlgorithm {
     return this.status !== AlgorithmStatus.NotImplemented;
   }
 
+  /**
+   * Object usage in string returns algorithm name.
+   * @returns Hash algorithm name.
+   */
+  public toString(): string {
+    return this.name;
+  }
+
+  /**
+   * Verify equality of 2 objects as hash algorithm.
+   * @param obj1 Hash algorithm.
+   * @param obj2 Hash algorithm.
+   * @returns True if hash algorithm id, name and length are equal.
+   */
+  public static equals(obj1: IHashAlgorithm, obj2: IHashAlgorithm): boolean {
+    return (
+      HashAlgorithm.isHashAlgorithm(obj1) &&
+      HashAlgorithm.isHashAlgorithm(obj2) &&
+      obj1.id === obj2.id &&
+      obj1.name.localeCompare(obj2.name) === 0 &&
+      obj1.length == obj2.length
+    );
+  }
+
+  /**
+   * Validate that object is hash algorithm.
+   * @param obj Validation object.
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private static isHashAlgorithm(obj: any): obj is IHashAlgorithm {
+    return (
+      typeof obj === "object" &&
+      obj !== null &&
+      Object.prototype.hasOwnProperty.call(obj, "id") &&
+      Number.isInteger(obj.id) &&
+      Object.prototype.hasOwnProperty.call(obj, "name") &&
+      typeof obj.name === "string" &&
+      Object.prototype.hasOwnProperty.call(obj, "length") &&
+      Number.isInteger(obj.length)
+    );
+  }
+
+  /**
+   * Is hash algorithm equal to another hash algorithm.
+   * @param obj Hash algorithm.
+   */
+  public isEqual(obj: IHashAlgorithm): boolean {
+    return HashAlgorithm.equals(this, obj);
+  }
+
+  /**
+   * Normalize algorithm name, lowercase and remove all non alphanumeric characters.
+   * @param name Algorithm name.
+   * @returns Normalized algorithm name.
+   */
   private static normalizeName(name: string): string {
     return name.toLowerCase().replace(/[^a-z0-9]/g, "");
   }

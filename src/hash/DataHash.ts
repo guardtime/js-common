@@ -2,8 +2,10 @@ import Hex from "../coders/HexCoder";
 
 import HashAlgorithm from "./HashAlgorithm";
 import { HashingError } from "./HashingError";
+import { compareUint8Arrays } from "../utils/Array";
+import IDataHash from "./IDataHash";
 
-export default class DataHash {
+export default class DataHash implements IDataHash {
   public readonly hashAlgorithm: HashAlgorithm;
   public readonly value: Uint8Array;
   public readonly imprint: Uint8Array;
@@ -21,14 +23,14 @@ export default class DataHash {
     }
 
     this.hashAlgorithm = algorithm;
-    this.value = new Uint8Array(bytes.subarray(1));
+    this.imprint = Uint8Array.from(bytes);
+    this.value = this.imprint.slice(1);
     if (this.value.length != this.hashAlgorithm.length) {
       throw new HashingError(
         "Imprint digest length does not match with algorithm."
       );
     }
 
-    this.imprint = new Uint8Array(bytes);
     Object.freeze(this);
   }
 
@@ -46,37 +48,35 @@ export default class DataHash {
   }
 
   /**
-   * Test equality of 2 objects as DataHash.
-   * @param {DataHash} x
-   * @param {DataHash} y
-   * @returns {boolean}
+   * Check if 2 objects are data hash and equal to eachother.
+   * @param obj1 First object.
+   * @param obj2 Second object.
+   * @returns True if data hashes imprint, value and algorithm are equal.
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static equals(x: any, y: any): boolean {
-    if (!DataHash.isDataHash(x) || !DataHash.isDataHash(y)) {
-      return false;
-    }
-
-    for (let i = 0; i < x.imprint.length; i++) {
-      if (x.imprint[i] !== y.imprint[i]) {
-        return false;
-      }
-    }
-
-    return true;
+  static equals(obj1: IDataHash, obj2: IDataHash): boolean {
+    return (
+      DataHash.isDataHash(obj1) &&
+      DataHash.isDataHash(obj2) &&
+      compareUint8Arrays(obj1.imprint, obj2.imprint) &&
+      compareUint8Arrays(obj1.value, obj2.value) &&
+      HashAlgorithm.equals(obj1.hashAlgorithm, obj2.hashAlgorithm)
+    );
   }
 
   /**
-   * Test if object is with imprint.
+   * Test if object is data hash.
    * @param obj Object to test.
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private static isDataHash(obj: any): boolean {
+  private static isDataHash(obj: any): obj is IDataHash {
     return (
       typeof obj === "object" &&
       obj !== null &&
       Object.prototype.hasOwnProperty.call(obj, "imprint") &&
-      ArrayBuffer.isView(obj.imprint)
+      ArrayBuffer.isView(obj.imprint) &&
+      Object.prototype.hasOwnProperty.call(obj, "value") &&
+      ArrayBuffer.isView(obj.value) &&
+      Object.prototype.hasOwnProperty.call(obj, "hashAlgorithm")
     );
   }
 
@@ -84,8 +84,7 @@ export default class DataHash {
     return Hex.encode(this.imprint);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  equals(other: any): boolean {
-    return DataHash.equals(this, other);
+  equals(obj: IDataHash): boolean {
+    return DataHash.equals(this, obj);
   }
 }

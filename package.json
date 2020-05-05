@@ -32,11 +32,6 @@
       "/node_modules/"
     ]
   },
-  "peerDependencies": {
-    "base64-js": "^1.3.1",
-    "big-integer": "^1.6.48",
-    "node-forge": "roysjosh/forge#ImplementPkcs7Verify"
-  },
   "dependencies": {
     "@types/base64-js": "^1.2.5",
     "@types/node-forge": "^0.9.3",
