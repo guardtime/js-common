@@ -1,4 +1,3 @@
-import ASCIIConverter from "../strings/ASCIIConverter";
 import { asn1, pkcs7, pki, util } from "node-forge";
 
 export default class CMSVerification {
@@ -16,8 +15,9 @@ export default class CMSVerification {
     trustedCertificates: Array<string>,
     selector: string | null
   ): boolean {
-    const signatureValueAscii = ASCIIConverter.ToString(signatureValue);
-    const signatureBuffer = util.createBuffer(signatureValueAscii);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    const signatureBuffer = new util.ByteBuffer(signatureValue.buffer);
     const signatureinAsn1 = asn1.fromDer(signatureBuffer);
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
@@ -62,7 +62,9 @@ export default class CMSVerification {
     selector: string | null
   ): boolean {
     if (signedBytes !== null) {
-      signature.content = util.createBuffer(signedBytes);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      signature.content = new util.ByteBuffer(signedBytes);
     }
 
     if (selector == null || selector.length == 0) {
