@@ -20,4 +20,14 @@ describe("HashAlgorithm", () => {
     const actualAlg = HashAlgorithm.getByName("does not exist");
     expect(actualAlg).toBeNull();
   });
+
+  test("is equal to object with similar info", () => {
+    expect(
+      HashAlgorithm.equals(HashAlgorithm.SHA2_256, {
+        id: 1,
+        length: 32,
+        name: "SHA-256",
+      })
+    ).toBeTruthy();
+  });
 });
