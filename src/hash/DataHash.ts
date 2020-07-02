@@ -23,7 +23,7 @@ export default class DataHash implements IDataHash {
     }
 
     this.hashAlgorithm = algorithm;
-    this.imprint = Uint8Array.from(bytes);
+    this.imprint = new Uint8Array(bytes);
     this.value = this.imprint.slice(1);
     if (this.value.length != this.hashAlgorithm.length) {
       throw new HashingError(
