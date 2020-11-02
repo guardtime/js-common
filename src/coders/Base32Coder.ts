@@ -1,9 +1,8 @@
-import base32Encode from 'base32-encode';
+import base32Encode from "base32-encode";
 
 export default class Base32Coder {
-
   static encode(bytes: Uint8Array): string {
-    return base32Encode(bytes, 'RFC4648', { padding: false });
+    return base32Encode(bytes, "RFC4648", { padding: false });
   }
 
   // https://github.com/chrismiceli/base32decode-javascript

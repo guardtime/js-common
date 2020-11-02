@@ -10,6 +10,6 @@ describe("Base32Coder", () => {
 
   it("encode works", () => {
     const bytes = new Uint8Array([0, 70]);
-    expect(Base32Coder.encode(bytes)).toBe('ABDA');
+    expect(Base32Coder.encode(bytes)).toBe("ABDA");
   });
 });
