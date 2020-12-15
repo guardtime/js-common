@@ -1,7 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import pki from "node-forge/lib/x509";
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import asn1 from "node-forge/lib/asn1";
 import DataHash from "../hash/DataHash";

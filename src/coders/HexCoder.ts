@@ -61,16 +61,16 @@ export default class HexCoder {
     const result = [];
     for (let i = 0; i < hex.length; i += 2) {
       if (
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         typeof HEX_BYTE_MAP[hex[i]] === "undefined" ||
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         typeof HEX_BYTE_MAP[hex[i + 1]] === "undefined"
       ) {
         throw new Error("Invalid HEX");
       }
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       result.push((HEX_BYTE_MAP[hex[i]] << 4) + HEX_BYTE_MAP[hex[i + 1]]);
     }

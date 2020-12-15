@@ -15,11 +15,11 @@ export default class CMSVerification {
     trustedCertificates: Array<string>,
     selector: string | null
   ): boolean {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const signatureBuffer = new util.ByteBuffer(signatureValue.buffer);
     const signatureinAsn1 = asn1.fromDer(signatureBuffer);
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const signature = pkcs7.messageFromAsn1(signatureinAsn1);
 
@@ -40,7 +40,7 @@ export default class CMSVerification {
     trustedCertificates: Array<string>,
     selector: string | null
   ): boolean {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const signature = pkcs7.messageFromPem(signatureValue);
 
@@ -62,7 +62,7 @@ export default class CMSVerification {
     selector: string | null
   ): boolean {
     if (signedBytes !== null) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       signature.content = new util.ByteBuffer(signedBytes);
     }
@@ -72,13 +72,13 @@ export default class CMSVerification {
     }
 
     const verifySelector = this.verifyCertificateSubject(
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       signature.certificates[0],
       selector
     );
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const verified = signature.verify(pki.createCaStore(trustedCertificates));
 

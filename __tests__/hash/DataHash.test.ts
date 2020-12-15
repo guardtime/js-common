@@ -73,7 +73,7 @@ describe("DataHash", () => {
   });
 
   it("equals with invalid objects", () => {
-    /* eslint-disable @typescript-eslint/ban-ts-ignore */
+    /* eslint-disable @typescript-eslint/ban-ts-comment */
     // @ts-ignore
     expect(DataHash.equals(undefined, undefined)).toBeFalsy();
     // @ts-ignore
@@ -95,7 +95,7 @@ describe("DataHash", () => {
         { imprint: {} }
       )
     ).toBeFalsy();
-    /* eslint-enable @typescript-eslint/ban-ts-ignore */
+    /* eslint-enable @typescript-eslint/ban-ts-comment */
   });
 
   it("equals with correct objects", () => {
