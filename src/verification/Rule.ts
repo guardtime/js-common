@@ -59,7 +59,7 @@ export abstract class Rule<Context, Error> {
     return this.onSuccess(rule).onFailure(rule).onNa(rule);
   }
 
-  public abstract async verify(context: Context): Promise<Result<Error>>;
+  public abstract verify(context: Context): Promise<Result<Error>>;
 
   public getNextRule(resultCode: ResultCode): Rule<Context, Error> | null {
     switch (resultCode) {
