@@ -1,4 +1,4 @@
-import { TypedArray } from "../utils/Array";
+import { TypedArray } from "../utils/Array.js";
 
 export default class WebCryptoRandom {
   /**

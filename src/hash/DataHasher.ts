@@ -1,9 +1,9 @@
-import NodeHasher from "./NodeHasher";
-import { Hasher } from "./Hasher";
-import HashAlgorithm from "./HashAlgorithm";
-import DataHash from "./DataHash";
-import WebHasher from "./WebHasher";
-import { isNodePlatform } from "../utils/Util";
+import NodeHasher from "./NodeHasher.js";
+import { Hasher } from "./Hasher.js";
+import HashAlgorithm from "./HashAlgorithm.js";
+import DataHash from "./DataHash.js";
+import WebHasher from "./WebHasher.js";
+import { isNodePlatform } from "../utils/Util.js";
 
 export default class DataHasher implements Hasher {
   private hasher: Hasher;

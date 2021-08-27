@@ -1,7 +1,7 @@
-import HashAlgorithm from "../hash/HashAlgorithm";
-import { isNodePlatform } from "../utils/Util";
-import NodeHMAC from "./NodeHMAC";
-import WebHMAC from "./WebHMAC";
+import HashAlgorithm from "../hash/HashAlgorithm.js";
+import { isNodePlatform } from "../utils/Util.js";
+import NodeHMAC from "./NodeHMAC.js";
+import WebHMAC from "./WebHMAC.js";
 
 export default class HMAC {
   /**

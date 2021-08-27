@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import util from "node-forge/lib/util";
+import util from "node-forge/lib/util.js";
 
 export default class Utf8Converter {
   /**

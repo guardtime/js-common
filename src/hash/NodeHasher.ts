@@ -19,10 +19,10 @@
  */
 
 import { Hash, createHash } from "crypto";
-import HashAlgorithm from "./HashAlgorithm";
-import { Hasher } from "./Hasher";
-import DataHash from "./DataHash";
-import { HashingError } from "./HashingError";
+import HashAlgorithm from "./HashAlgorithm.js";
+import { Hasher } from "./Hasher.js";
+import DataHash from "./DataHash.js";
+import { HashingError } from "./HashingError.js";
 
 export default class NodeHasher implements Hasher {
   private readonly _algorithm: HashAlgorithm;

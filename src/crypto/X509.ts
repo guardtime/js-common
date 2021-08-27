@@ -1,13 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import pki from "node-forge/lib/x509";
+import pki from "node-forge/lib/x509.js";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import asn1 from "node-forge/lib/asn1";
-import DataHash from "../hash/DataHash";
-import SyncDataHasher from "../hash/SyncDataHasher";
-import HashAlgorithm from "../hash/HashAlgorithm";
-import ASCIIConverter from "../strings/ASCIIConverter";
+import asn1 from "node-forge/lib/asn1.js";
+import DataHash from "../hash/DataHash.js";
+import SyncDataHasher from "../hash/SyncDataHasher.js";
+import HashAlgorithm from "../hash/HashAlgorithm.js";
+import ASCIIConverter from "../strings/ASCIIConverter.js";
 import { BigInteger } from "big-integer";
 
 /**

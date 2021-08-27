@@ -1,11 +1,11 @@
-import "node-forge/lib/sha256";
-import "node-forge/lib/sha1";
-import "node-forge/lib/sha512";
-import HashAlgorithm from "./HashAlgorithm";
-import DataHash from "./DataHash";
-import HexCoder from "../coders/HexCoder";
-import ASCIIConverter from "../strings/ASCIIConverter";
-import { HashingError } from "./HashingError";
+import "node-forge/lib/sha256.js";
+import "node-forge/lib/sha1.js";
+import "node-forge/lib/sha512.js";
+import HashAlgorithm from "./HashAlgorithm.js";
+import DataHash from "./DataHash.js";
+import HexCoder from "../coders/HexCoder.js";
+import ASCIIConverter from "../strings/ASCIIConverter.js";
+import { HashingError } from "./HashingError.js";
 import { md } from "node-forge";
 
 /**

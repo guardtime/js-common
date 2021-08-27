@@ -18,7 +18,7 @@
  * reserves and retains all trademark rights.
  */
 
-import { tabPrefix } from "../strings/StringUtils";
+import { tabPrefix } from "../strings/StringUtils.js";
 
 export enum ResultCode {
   OK,

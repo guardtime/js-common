@@ -1,6 +1,6 @@
 /*eslint no-use-before-define: ["error", { "variables": false }]*/
-import { HashingError } from "./HashingError";
-import { IHashAlgorithm } from "./IHashAlgorithm";
+import { HashingError } from "./HashingError.js";
+import { IHashAlgorithm } from "./IHashAlgorithm.js";
 
 /**
  * HashAlgorithm Status enum.

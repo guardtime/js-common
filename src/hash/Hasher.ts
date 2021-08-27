@@ -18,8 +18,8 @@
  * reserves and retains all trademark rights.
  */
 
-import DataHash from "./DataHash";
-import HashAlgorithm from "./HashAlgorithm";
+import DataHash from "./DataHash.js";
+import HashAlgorithm from "./HashAlgorithm.js";
 
 export interface Hasher {
   readonly algorithm: HashAlgorithm;

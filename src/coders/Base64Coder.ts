@@ -1,5 +1,5 @@
 import { toByteArray, fromByteArray } from "base64-js";
-import ASCIIConverter from "../strings/ASCIIConverter";
+import ASCIIConverter from "../strings/ASCIIConverter.js";
 
 export default class Base64Coder {
   static decode(value: string): Uint8Array {
