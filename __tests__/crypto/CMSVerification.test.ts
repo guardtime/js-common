@@ -1,4 +1,4 @@
-import { pki } from "node-forge";
+import forge from "node-forge";
 import CMSVerification from "../../src/crypto/CMSVerification";
 
 const certChain =
@@ -150,7 +150,7 @@ describe("CMS", () => {
   });
 
   it("Verify rdn short names", () => {
-    const certificate = pki.certificateFromPem(certChain);
+    const certificate = forge.pki.certificateFromPem(certChain);
     const verify = CMSVerification.verifyCertificateSubject(
       certificate,
       "C=US,O=Let's Encrypt,CN=Let's Encrypt Authority X3"
@@ -159,7 +159,7 @@ describe("CMS", () => {
   });
 
   it("Verify 1 rdn long names", () => {
-    const certificate = pki.certificateFromPem(certChain);
+    const certificate = forge.pki.certificateFromPem(certChain);
     // ,organizationname=Let's Encrypt,commonname=Let's Encrypt Authority X3
     const verify = CMSVerification.verifyCertificateSubject(
       certificate,
@@ -169,7 +169,7 @@ describe("CMS", () => {
   });
 
   it("Verify multiple rdn long names", () => {
-    const certificate = pki.certificateFromPem(certChain);
+    const certificate = forge.pki.certificateFromPem(certChain);
     const verify = CMSVerification.verifyCertificateSubject(
       certificate,
       "countryName=US,organizationname=Let's Encrypt,commonname=Let's Encrypt Authority X3"
@@ -178,19 +178,19 @@ describe("CMS", () => {
   });
 
   it("Verify rdn empty", () => {
-    const certificate = pki.certificateFromPem(certChain);
+    const certificate = forge.pki.certificateFromPem(certChain);
     const verify = CMSVerification.verifyCertificateSubject(certificate, "");
     expect(verify).toBe(false);
   });
 
   it("Verify rdn null", () => {
-    const certificate = pki.certificateFromPem(certChain);
+    const certificate = forge.pki.certificateFromPem(certChain);
     const verify = CMSVerification.verifyCertificateSubject(certificate, null);
     expect(verify).toBe(false);
   });
 
   it("Verify rdn false", () => {
-    const certificate = pki.certificateFromPem(certChain);
+    const certificate = forge.pki.certificateFromPem(certChain);
     // ,organizationname=Let's Encrypt,commonname=Let's Encrypt Authority X3
     const verify = CMSVerification.verifyCertificateSubject(
       certificate,

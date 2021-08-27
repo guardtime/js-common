@@ -6,14 +6,14 @@ import DataHash from "./DataHash.js";
 import HexCoder from "../coders/HexCoder.js";
 import ASCIIConverter from "../strings/ASCIIConverter.js";
 import { HashingError } from "./HashingError.js";
-import { md } from "node-forge";
+import forge from "node-forge";
 
 /**
  * Provides synchronous hashing functions
  */
 export default class SyncDataHasher {
   public readonly hashAlgorithm: HashAlgorithm;
-  private _messageDigest: md.MessageDigest;
+  private _messageDigest: forge.md.MessageDigest;
 
   /**
    * Create SyncDataHasher instance the hash algorithm
@@ -66,16 +66,16 @@ export default class SyncDataHasher {
 
   private static createMessageDigest(
     hashAlgorithm: HashAlgorithm
-  ): md.MessageDigest {
+  ): forge.md.MessageDigest {
     switch (hashAlgorithm) {
       case HashAlgorithm.SHA1:
-        return md.sha1.create();
+        return forge.md.sha1.create();
       case HashAlgorithm.SHA2_256:
-        return md.sha256.create();
+        return forge.md.sha256.create();
       case HashAlgorithm.SHA2_384:
-        return md.sha384.create();
+        return forge.md.sha384.create();
       case HashAlgorithm.SHA2_512:
-        return md.sha512.create();
+        return forge.md.sha512.create();
       default:
         throw new HashingError(
           `Hash algorithm is not implemented: ${hashAlgorithm.name}.`

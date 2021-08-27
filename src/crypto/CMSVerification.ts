@@ -1,4 +1,4 @@
-import { asn1, pkcs7, pki, util } from "node-forge";
+import forge from "node-forge";
 
 export default class CMSVerification {
   /**
@@ -17,11 +17,11 @@ export default class CMSVerification {
   ): boolean {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const signatureBuffer = new util.ByteBuffer(signatureValue.buffer);
-    const signatureinAsn1 = asn1.fromDer(signatureBuffer);
+    const signatureBuffer = new forge.util.ByteBuffer(signatureValue.buffer);
+    const signatureinAsn1 = forge.asn1.fromDer(signatureBuffer);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const signature = pkcs7.messageFromAsn1(signatureinAsn1);
+    const signature = forge.pkcs7.messageFromAsn1(signatureinAsn1);
 
     return this.verify(signature, signedBytes, trustedCertificates, selector);
   }
@@ -42,7 +42,7 @@ export default class CMSVerification {
   ): boolean {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const signature = pkcs7.messageFromPem(signatureValue);
+    const signature = forge.pkcs7.messageFromPem(signatureValue);
 
     return this.verify(signature, signedBytes, trustedCertificates, selector);
   }
@@ -56,7 +56,7 @@ export default class CMSVerification {
    * @returns boolean value whether the signature was verified
    */
   private static verify(
-    signature: pkcs7.PkcsSignedData,
+    signature: forge.pkcs7.PkcsSignedData,
     signedBytes: Uint8Array | string | null,
     trustedCertificates: Array<string>,
     selector: string | null
@@ -64,7 +64,7 @@ export default class CMSVerification {
     if (signedBytes !== null) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      signature.content = new util.ByteBuffer(signedBytes);
+      signature.content = new forge.util.ByteBuffer(signedBytes);
     }
 
     if (selector == null || selector.length == 0) {
@@ -80,7 +80,9 @@ export default class CMSVerification {
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const verified = signature.verify(pki.createCaStore(trustedCertificates));
+    const verified = signature.verify(
+      forge.pki.createCaStore(trustedCertificates)
+    );
 
     return verified && verifySelector;
   }
@@ -93,7 +95,7 @@ export default class CMSVerification {
    * @returns true if the selectors match and false in other cases.
    */
   static verifyCertificateSubject(
-    certificate: pki.Certificate,
+    certificate: forge.pki.Certificate,
     selectorString: string | null
   ): boolean {
     if (selectorString == null || selectorString.length == 0) {
