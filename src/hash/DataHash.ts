@@ -1,9 +1,9 @@
-import Hex from "../coders/HexCoder";
+import Hex from "../coders/HexCoder.js";
 
-import HashAlgorithm from "./HashAlgorithm";
-import { HashingError } from "./HashingError";
-import { compareUint8Arrays } from "../utils/Array";
-import IDataHash from "./IDataHash";
+import HashAlgorithm from "./HashAlgorithm.js";
+import { HashingError } from "./HashingError.js";
+import { compareUint8Arrays } from "../utils/Array.js";
+import IDataHash from "./IDataHash.js";
 
 export default class DataHash implements IDataHash {
   public readonly hashAlgorithm: HashAlgorithm;

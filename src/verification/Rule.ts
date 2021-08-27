@@ -18,7 +18,7 @@
  * reserves and retains all trademark rights.
  */
 
-import { Result, ResultCode } from "./Result";
+import { Result, ResultCode } from "./Result.js";
 
 /**
  * Verification Rule for KSI Signature

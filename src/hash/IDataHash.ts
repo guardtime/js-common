@@ -1,4 +1,4 @@
-import HashAlgorithm from "./HashAlgorithm";
+import HashAlgorithm from "./HashAlgorithm.js";
 
 export default class IDataHash {
   hashAlgorithm: HashAlgorithm;

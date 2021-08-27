@@ -1,4 +1,4 @@
-import HashAlgorithm from "../hash/HashAlgorithm";
+import HashAlgorithm from "../hash/HashAlgorithm.js";
 import TypedArray = NodeJS.TypedArray;
 
 export interface ICryptoApi {

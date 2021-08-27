@@ -1,5 +1,5 @@
-import HashAlgorithm from "../hash/HashAlgorithm";
-import { HashingError } from "../hash/HashingError";
+import HashAlgorithm from "../hash/HashAlgorithm.js";
+import { HashingError } from "../hash/HashingError.js";
 
 export default class WebHMAC {
   /**

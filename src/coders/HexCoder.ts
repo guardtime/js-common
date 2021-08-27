@@ -1,4 +1,4 @@
-import ASCIIConverter from "../strings/ASCIIConverter";
+import ASCIIConverter from "../strings/ASCIIConverter.js";
 
 const BYTE_HEX_MAP = "0123456789ABCDEF";
 const HEX_BYTE_MAP = {

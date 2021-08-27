@@ -18,8 +18,8 @@
  * reserves and retains all trademark rights.
  */
 
-import { Result } from "./Result";
-import { Rule } from "./Rule";
+import { Result } from "./Result.js";
+import { Rule } from "./Rule.js";
 
 /**
  * Verification policy for KSI signature

@@ -18,10 +18,10 @@
  * reserves and retains all trademark rights.
  */
 
-import HashAlgorithm from "./HashAlgorithm";
-import DataHash from "./DataHash";
-import { HashingError } from "./HashingError";
-import { Hasher } from "./Hasher";
+import HashAlgorithm from "./HashAlgorithm.js";
+import DataHash from "./DataHash.js";
+import { HashingError } from "./HashingError.js";
+import { Hasher } from "./Hasher.js";
 
 /**
  * Does hashing with asynchronous way
