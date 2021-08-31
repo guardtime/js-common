@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import util from "node-forge/lib/util.js";
+import forge from "node-forge";
 
 export default class Utf8Converter {
   /**
@@ -13,7 +13,7 @@ export default class Utf8Converter {
       throw new Error("Invalid string");
     }
 
-    return util.text.utf8.encode(utf8String);
+    return forge.util.text.utf8.encode(utf8String);
   }
 
   /**
@@ -26,6 +26,6 @@ export default class Utf8Converter {
       throw new Error("Invalid byte array");
     }
 
-    return util.text.utf8.decode(bytes);
+    return forge.util.text.utf8.decode(bytes);
   }
 }

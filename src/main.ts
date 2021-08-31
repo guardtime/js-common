@@ -41,4 +41,4 @@ export { Policy } from "./verification/Policy.js";
 export { Rule } from "./verification/Rule.js";
 export { Result, ResultCode } from "./verification/Result.js";
 
-export * as Array from "./utils/Array";
+export * as Array from "./utils/Array.js";
