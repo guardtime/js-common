@@ -1,9 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import pki from "node-forge/lib/x509.js";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import asn1 from "node-forge/lib/asn1.js";
+import forge from "node-forge";
 import DataHash from "../hash/DataHash.js";
 import SyncDataHasher from "../hash/SyncDataHasher.js";
 import HashAlgorithm from "../hash/HashAlgorithm.js";
@@ -14,12 +9,12 @@ import { BigInteger } from "big-integer";
  * Hashes the signed data for the verification process.
  * Support only some hashing algorithms.
  *
- * @param {pki.Certificate} certificate
+ * @param {forge.pki.Certificate} certificate
  * @param {Uint8Array} signedData
  * @returns {DataHash}
  */
 function hashData(
-  certificate: pki.Certificate,
+  certificate: forge.pki.Certificate,
   signedData: Uint8Array
 ): DataHash {
   let hashAlgorithm;
@@ -44,13 +39,15 @@ function hashData(
  * Converts bytes to the Forge certificate object
  *
  * @param {Uint8Array} certificateBytes
- * @returns {pki.Certificate}
+ * @returns {forge.pki.Certificate}
  */
-function convertToForgeCert(certificateBytes: Uint8Array): pki.Certificate {
-  const certAsn1Format = asn1.fromDer(
+function convertToForgeCert(
+  certificateBytes: Uint8Array
+): forge.pki.Certificate {
+  const certAsn1Format = forge.asn1.fromDer(
     ASCIIConverter.ToString(certificateBytes)
   );
-  return pki.certificateFromAsn1(certAsn1Format);
+  return forge.pki.certificateFromAsn1(certAsn1Format);
 }
 
 export default class X509 {
@@ -88,7 +85,11 @@ export default class X509 {
       throw new Error("Could not verify with public key");
     }
 
-    return cert.publicKey.verify(
+    return (
+      cert.publicKey as unknown as {
+        verify: (hash: string, signature: string) => boolean;
+      }
+    ).verify(
       ASCIIConverter.ToString(hashOfData),
       ASCIIConverter.ToString(signature)
     );
@@ -98,7 +99,7 @@ export default class X509 {
     certificateBytes: Uint8Array,
     time: BigInteger
   ): boolean {
-    const cert: pki.Certificate = convertToForgeCert(certificateBytes);
+    const cert: forge.pki.Certificate = convertToForgeCert(certificateBytes);
     return !(
       time.lt(new Date(cert.validity.notBefore).getTime() / 1000) ||
       time.gt(new Date(cert.validity.notAfter).getTime() / 1000)
