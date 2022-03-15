@@ -1,17 +1,17 @@
-import "node-forge/lib/sha256.js";
-import "node-forge/lib/sha1.js";
-import "node-forge/lib/sha512.js";
-import HashAlgorithm from "./HashAlgorithm.js";
-import DataHash from "./DataHash.js";
-import HexCoder from "../coders/HexCoder.js";
-import ASCIIConverter from "../strings/ASCIIConverter.js";
-import { HashingError } from "./HashingError.js";
 import forge from "node-forge";
+import "node-forge/lib/sha1.js";
+import "node-forge/lib/sha256.js";
+import "node-forge/lib/sha512.js";
+import { HexCoder } from "../coders/HexCoder.js";
+import { ASCIIConverter } from "../strings/ASCIIConverter.js";
+import { DataHash } from "./DataHash.js";
+import { HashAlgorithm } from "./HashAlgorithm.js";
+import { HashingError } from "./HashingError.js";
 
 /**
  * Provides synchronous hashing functions
  */
-export default class SyncDataHasher {
+export class SyncDataHasher {
   public readonly hashAlgorithm: HashAlgorithm;
   private _messageDigest: forge.md.MessageDigest;
 

@@ -18,15 +18,15 @@
  * reserves and retains all trademark rights.
  */
 
-import HashAlgorithm from "./HashAlgorithm.js";
-import DataHash from "./DataHash.js";
+import { DataHash } from "./DataHash.js";
+import { HashAlgorithm } from "./HashAlgorithm.js";
 import { HashingError } from "./HashingError.js";
 import { Hasher } from "./Hasher.js";
 
 /**
  * Does hashing with asynchronous way
  */
-export default class WebHasher implements Hasher {
+export class WebHasher implements Hasher {
   private readonly _algorithm: HashAlgorithm;
   private _data: Uint8Array;
 

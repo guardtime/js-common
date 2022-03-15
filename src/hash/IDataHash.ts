@@ -1,6 +1,6 @@
-import HashAlgorithm from "./HashAlgorithm.js";
+import { HashAlgorithm } from "./HashAlgorithm.js";
 
-export default class IDataHash {
+export class IDataHash {
   hashAlgorithm: HashAlgorithm;
   value: Uint8Array;
   imprint: Uint8Array;

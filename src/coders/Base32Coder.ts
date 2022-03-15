@@ -1,6 +1,6 @@
 import { base32 } from "rfc4648";
 
-export default class Base32Coder {
+export class Base32Coder {
   static encode(bytes: Uint8Array): string {
     return base32.stringify(bytes, { pad: false });
   }

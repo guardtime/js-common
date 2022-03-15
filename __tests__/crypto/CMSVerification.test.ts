@@ -1,5 +1,5 @@
 import forge from "node-forge";
-import CMSVerification from "../../src/crypto/CMSVerification";
+import { CMSVerification } from "../../src/crypto/CMSVerification";
 
 const certChain =
   "-----BEGIN CERTIFICATE-----\n" +

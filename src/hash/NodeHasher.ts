@@ -18,13 +18,13 @@
  * reserves and retains all trademark rights.
  */
 
-import { Hash, createHash } from "crypto";
-import HashAlgorithm from "./HashAlgorithm.js";
+import { createHash, Hash } from "crypto";
+import { DataHash } from "./DataHash.js";
+import { HashAlgorithm } from "./HashAlgorithm.js";
 import { Hasher } from "./Hasher.js";
-import DataHash from "./DataHash.js";
 import { HashingError } from "./HashingError.js";
 
-export default class NodeHasher implements Hasher {
+export class NodeHasher implements Hasher {
   private readonly _algorithm: HashAlgorithm;
   private _hasher: Hash;
 

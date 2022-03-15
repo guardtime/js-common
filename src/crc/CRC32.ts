@@ -15,7 +15,7 @@ function makeCRCTable(): number[] {
   return crcTable;
 }
 
-export default class CRC32 {
+export class CRC32 {
   private static crcTable = makeCRCTable();
 
   static create(value: Uint8Array): BigInteger.BigInteger {

@@ -1,5 +1,5 @@
-import HashAlgorithm from "../../src/hash/HashAlgorithm";
-import DataHash from "../../src/hash/DataHash";
+import { HashAlgorithm } from "../../src/hash/HashAlgorithm";
+import { DataHash } from "../../src/hash/DataHash";
 import { HashingError } from "../../src/hash/HashingError";
 
 describe("DataHash", () => {

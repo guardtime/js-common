@@ -11,7 +11,7 @@ interface VerificationChecks {
  * @param {string} name - Verification name.
  * @deprecated
  */
-export default class VerificationResult {
+export class VerificationResult {
   public readonly name: string;
   public readonly checks: VerificationChecks;
 

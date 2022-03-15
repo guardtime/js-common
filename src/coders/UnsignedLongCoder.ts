@@ -1,6 +1,6 @@
 import BigInteger from "big-integer";
 
-export default class UnsignedLongCoder {
+export class UnsignedLongCoder {
   /**
    * Convert bytes to unsigned long
    * @param {Uint8Array} data byte array

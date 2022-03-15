@@ -1,4 +1,4 @@
-import Utf8Converter from "../../src/strings/Utf8Converter";
+import { Utf8Converter } from "../../src/strings/Utf8Converter";
 
 describe("Utf8Converter", () => {
   it("converter works", () => {

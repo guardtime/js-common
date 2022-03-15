@@ -1,6 +1,6 @@
-import HashAlgorithm from "../../src/hash/HashAlgorithm";
-import SyncDataHasher from "../../src/hash/SyncDataHasher";
-import NodeHasher from "../../src/hash/NodeHasher";
+import { HashAlgorithm } from "../../src/hash/HashAlgorithm";
+import { SyncDataHasher } from "../../src/hash/SyncDataHasher";
+import { NodeHasher } from "../../src/hash/NodeHasher";
 
 describe("Data hashers work similarly", () => {
   it("sha256 is the same", () => {

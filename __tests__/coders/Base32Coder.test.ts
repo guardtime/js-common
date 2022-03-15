@@ -1,4 +1,4 @@
-import Base32Coder from "../../src/coders/Base32Coder";
+import { Base32Coder } from "../../src/coders/Base32Coder.js";
 
 describe("Base32Coder", () => {
   it("decode works", () => {

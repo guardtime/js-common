@@ -1,4 +1,4 @@
-import VerificationResult from "../../src/models/VerificationResult";
+import { VerificationResult } from "../../src/models/VerificationResult";
 
 describe("Verification Result", () => {
   it("can report that it is a success", () => {

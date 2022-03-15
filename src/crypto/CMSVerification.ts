@@ -1,6 +1,6 @@
 import forge from "node-forge";
 
-export default class CMSVerification {
+export class CMSVerification {
   /**
    * Transforms input signature into a forge pkcs7 signature
    * @param signatureValue - the signature in Uint8Array format
