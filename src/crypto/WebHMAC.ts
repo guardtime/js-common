@@ -1,7 +1,7 @@
-import HashAlgorithm from "../hash/HashAlgorithm.js";
+import { HashAlgorithm } from "../hash/HashAlgorithm.js";
 import { HashingError } from "../hash/HashingError.js";
 
-export default class WebHMAC {
+export class WebHMAC {
   /**
    * @param {HashAlgorithm} algorithm
    * @param {Uint8Array} key

@@ -1,4 +1,4 @@
-import ASCIIConverter from "../strings/ASCIIConverter.js";
+import { ASCIIConverter } from "../strings/ASCIIConverter.js";
 
 const BYTE_HEX_MAP = "0123456789ABCDEF";
 const HEX_BYTE_MAP = {
@@ -20,7 +20,7 @@ const HEX_BYTE_MAP = {
   F: 15,
 };
 
-export default class HexCoder {
+export class HexCoder {
   /**
    * Convert byte array to hex
    * @param {Uint8Array} data byte array

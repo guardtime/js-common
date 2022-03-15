@@ -1,4 +1,4 @@
-import CRC32 from "../../src/crc/CRC32";
+import { CRC32 } from "../../src/crc/CRC32";
 
 describe("CRC32", () => {
   it("create crc32", () => {

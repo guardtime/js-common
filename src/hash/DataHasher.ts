@@ -1,11 +1,11 @@
-import NodeHasher from "./NodeHasher.js";
-import { Hasher } from "./Hasher.js";
-import HashAlgorithm from "./HashAlgorithm.js";
-import DataHash from "./DataHash.js";
-import WebHasher from "./WebHasher.js";
 import { isNodePlatform } from "../utils/Util.js";
+import { DataHash } from "./DataHash.js";
+import { HashAlgorithm } from "./HashAlgorithm.js";
+import { Hasher } from "./Hasher.js";
+import { NodeHasher } from "./NodeHasher.js";
+import { WebHasher } from "./WebHasher.js";
 
-export default class DataHasher implements Hasher {
+export class DataHasher implements Hasher {
   private hasher: Hasher;
 
   constructor(algorithm: HashAlgorithm) {

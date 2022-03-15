@@ -1,11 +1,10 @@
-import Hex from "../coders/HexCoder.js";
-
-import HashAlgorithm from "./HashAlgorithm.js";
+import { HexCoder } from "../coders/HexCoder.js";
+import { HashAlgorithm } from "./HashAlgorithm.js";
 import { HashingError } from "./HashingError.js";
 import { compareUint8Arrays } from "../utils/Array.js";
-import IDataHash from "./IDataHash.js";
+import { IDataHash } from "./IDataHash.js";
 
-export default class DataHash implements IDataHash {
+export class DataHash implements IDataHash {
   public readonly hashAlgorithm: HashAlgorithm;
   public readonly value: Uint8Array;
   public readonly imprint: Uint8Array;
@@ -81,7 +80,7 @@ export default class DataHash implements IDataHash {
   }
 
   toString(): string {
-    return Hex.encode(this.imprint);
+    return HexCoder.encode(this.imprint);
   }
 
   equals(obj: IDataHash): boolean {

@@ -1,4 +1,4 @@
-import HexCoder from "../../src/coders/HexCoder";
+import { HexCoder } from "../../src/coders/HexCoder";
 
 describe("Hex coder", () => {
   it("encode/decode works", () => {

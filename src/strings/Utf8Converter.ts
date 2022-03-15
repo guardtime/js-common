@@ -2,7 +2,7 @@
 // @ts-ignore
 import forge from "node-forge";
 
-export default class Utf8Converter {
+export class Utf8Converter {
   /**
    * Convert string to bytes
    * @param utf8String string

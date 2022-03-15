@@ -1,9 +1,9 @@
-import HashAlgorithm from "../hash/HashAlgorithm.js";
+import { HashAlgorithm } from "../hash/HashAlgorithm.js";
 import { isNodePlatform } from "../utils/Util.js";
-import NodeHMAC from "./NodeHMAC.js";
-import WebHMAC from "./WebHMAC.js";
+import { NodeHMAC } from "./NodeHMAC.js";
+import { WebHMAC } from "./WebHMAC.js";
 
-export default class HMAC {
+export class HMAC {
   /**
    * @param {HashAlgorithm} algorithm
    * @param {Uint8Array} key

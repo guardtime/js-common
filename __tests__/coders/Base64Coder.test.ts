@@ -1,4 +1,4 @@
-import Base64Coder from "../../src/coders/Base64Coder";
+import { Base64Coder } from "../../src/coders/Base64Coder.js";
 
 describe("Base64Coder", () => {
   it("encode/decode works", () => {

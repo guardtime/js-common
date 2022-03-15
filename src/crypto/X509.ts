@@ -1,9 +1,9 @@
 import forge from "node-forge";
-import DataHash from "../hash/DataHash.js";
-import SyncDataHasher from "../hash/SyncDataHasher.js";
-import HashAlgorithm from "../hash/HashAlgorithm.js";
-import ASCIIConverter from "../strings/ASCIIConverter.js";
 import { BigInteger } from "big-integer";
+import { DataHash } from "../hash/DataHash.js";
+import { HashAlgorithm } from "../hash/HashAlgorithm.js";
+import { SyncDataHasher } from "../hash/SyncDataHasher.js";
+import { ASCIIConverter } from "../strings/ASCIIConverter.js";
 
 /**
  * Hashes the signed data for the verification process.
@@ -50,7 +50,7 @@ function convertToForgeCert(
   return forge.pki.certificateFromAsn1(certAsn1Format);
 }
 
-export default class X509 {
+export class X509 {
   /**
    * Verifies that the data is signed with the provided signature and that the signature matches
    * the provided X509 certificate.

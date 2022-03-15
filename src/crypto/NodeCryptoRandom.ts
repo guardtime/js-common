@@ -1,6 +1,6 @@
 import * as crypto from "crypto";
 
-export default class NodeCryptoApi {
+export class NodeCryptoApi {
   /**
    * Get cryptographically strong random values. The array given as the parameter is
    * filled with random numbers (random in its cryptographic meaning).

@@ -1,8 +1,8 @@
 import * as crypto from "crypto";
-import HashAlgorithm from "../hash/HashAlgorithm.js";
+import { HashAlgorithm } from "../hash/HashAlgorithm.js";
 import { HashingError } from "../hash/HashingError.js";
 
-export default class NodeHMAC {
+export class NodeHMAC {
   /**
    * @param {HashAlgorithm} algorithm
    * @param {Uint8Array} key

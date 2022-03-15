@@ -26,7 +26,7 @@ enum AlgorithmStatus {
 
 const INVALID_HASH_ALGORITHM_IDS = new Uint8Array([0x03, 0x7e]);
 
-export default class HashAlgorithm {
+export class HashAlgorithm {
   public readonly id: number;
   public readonly name: string;
   public readonly length: number;

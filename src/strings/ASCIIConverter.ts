@@ -1,4 +1,4 @@
-export default class ASCIIConverter {
+export class ASCIIConverter {
   /**
    * Convert string to bytes
    * @param asciiString string
