@@ -10,7 +10,7 @@
   },
   "type": "module",
   "exports": {
-    "./lib/*": "./lib/*.js"
+    "./lib/*": "./lib/*"
   },
   "scripts": {
     "clean:lib": "node -e \"try { require('fs').rmSync('./lib', { recursive: true }); } catch(err) { console.log(err); }\"",
