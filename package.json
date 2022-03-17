@@ -32,7 +32,7 @@
     "rfc4648": "^1.5.0",
     "base64-js": "^1.5.1",
     "big-integer": "^1.6.48",
-    "node-forge": "git+https://github.com/roysjosh/forge.git#ImplementPkcs7Verify"
+    "node-forge": "git+https://github.com/martti007/forge-1.git"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.16.7",
