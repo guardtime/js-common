@@ -7,6 +7,7 @@ export class CMSVerification {
    * @param signedBytes - if the signedBytes are not included in the signature, then they must be included here.
    * If signed bytes are included in the signature, then set this as null
    * @param trustedCertificates - list of trusted root ceritificates in PEM format
+   * @param selector
    * @returns the result of the verify function
    */
   static verifyFromBytes(
@@ -15,13 +16,14 @@ export class CMSVerification {
     trustedCertificates: Array<string>,
     selector: string | null
   ): boolean {
+    const signatureBuffer = new forge.util.ByteStringBuffer(
+      signatureValue.buffer
+    );
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const signatureBuffer = new forge.util.ByteBuffer(signatureValue.buffer);
-    const signatureinAsn1 = forge.asn1.fromDer(signatureBuffer);
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const signature = forge.pkcs7.messageFromAsn1(signatureinAsn1);
+    const signature = forge.pkcs7.messageFromAsn1(
+      forge.asn1.fromDer(signatureBuffer)
+    );
 
     return this.verify(signature, signedBytes, trustedCertificates, selector);
   }
@@ -32,6 +34,7 @@ export class CMSVerification {
    * @param signedBytes - if the signedBytes are not included in the signature, then they must be included here.
    * If signed bytes are included in the signature, then set this as null
    * @param trustedCertificates - list of trusted root ceritificates in PEM format
+   * @param selector
    * @returns the result of the verify function
    */
   static verifyFromPem(
@@ -40,10 +43,9 @@ export class CMSVerification {
     trustedCertificates: Array<string>,
     selector: string | null
   ): boolean {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const signature = forge.pkcs7.messageFromPem(signatureValue);
-
+    const signature = forge.pkcs7.messageFromPem(
+      signatureValue
+    ) as forge.pkcs7.PkcsSignedData;
     return this.verify(signature, signedBytes, trustedCertificates, selector);
   }
 
@@ -53,6 +55,7 @@ export class CMSVerification {
    * @param signedBytes - if the signedBytes are not included in the signature, then they must be included here.
    * If signed bytes are included in the signature, then set this as null
    * @param trustedCertificates - list of trusted root ceritificates in PEM format
+   * @param selector - certificate attribute selector
    * @returns boolean value whether the signature was verified
    */
   private static verify(
@@ -62,9 +65,7 @@ export class CMSVerification {
     selector: string | null
   ): boolean {
     if (signedBytes !== null) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      signature.content = new forge.util.ByteBuffer(signedBytes);
+      signature.content = new forge.util.ByteStringBuffer(signedBytes);
     }
 
     if (selector == null || selector.length == 0) {
@@ -72,8 +73,6 @@ export class CMSVerification {
     }
 
     const verifySelector = this.verifyCertificateSubject(
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       signature.certificates[0],
       selector
     );
