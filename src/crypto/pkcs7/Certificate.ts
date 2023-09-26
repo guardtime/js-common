@@ -6,7 +6,7 @@ import { SubjectPublicKeyInfo } from "./SubjectPublicKeyInfo";
 
 export class Certificate {
   public readonly tbsCertificate: TbsCertificate;
-  public readonly algorithm: string;
+  public readonly signatureAlgorithm: string;
   private readonly signature: Uint8Array;
   private readonly tbsCertificateBytes: Uint8Array;
 
@@ -38,7 +38,7 @@ export class Certificate {
     const children = obj.parseValueAsChildren();
     this.tbsCertificate = new TbsCertificate(children[0]);
     this.tbsCertificateBytes = children[0].getBytes();
-    this.algorithm = children[1]
+    this.signatureAlgorithm = children[1]
       .parseValueAsChildren()
       .at(0)
       ?.parseValueAsObjectIdentifier() as string;

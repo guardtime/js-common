@@ -1,7 +1,8 @@
 import { Base64Coder } from "../../src/coders/Base64Coder";
 import { CMSVerification } from "../../src/crypto/CMSVerification";
 import { Utf8Converter } from "../../src/strings/Utf8Converter";
-import { NodeSpkiFactory } from "../../src/crypto/pkcs7/SignedDataVerifier";
+
+import { NodeSpkiFactory } from "../../src/crypto/pkcs7/NodeSpkiFactory";
 
 const trustedCertificate =
   "MIIEkjCCA3qgAwIBAgIQCgFBQgAAAVOFc2oLheynCDANBgkqhkiG9w0BAQsFADA/" +

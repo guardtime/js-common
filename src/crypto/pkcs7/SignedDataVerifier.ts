@@ -3,14 +3,11 @@ import { Asn1Object } from "../../asn1/Asn1Object";
 import { VerificationResult } from "./VerificationResult";
 import { HexCoder } from "../../coders/HexCoder";
 import moment from "moment/moment";
-import crypto from "node:crypto";
-import { sha224, sha256 } from "@noble/hashes/sha256";
-import { sha384, sha512, sha512_224, sha512_256 } from "@noble/hashes/sha512";
 import { Certificate } from "./Certificate";
 import { SignedData } from "./SignedData";
 import { ChainLink } from "./ChainLink";
-import { Asn1ByteInputStream } from "../../asn1/Asn1ByteInputStream";
-import { SubjectPublicKeyInfo } from "./SubjectPublicKeyInfo";
+import { SpkiFactory } from "./SpkiFactory";
+import { DigestAlgorithm } from "./DigestAlgorithm";
 
 enum Pkcs9AttributeType {
   CONTENT_TYPE = "1.2.840.113549.1.9.3",
@@ -92,10 +89,11 @@ export class SignedDataVerifier
           }
 
           for (const attribute of messageDigests) {
-            const result = this.digest(
+            //switch (signer.digestAlgorithm.identifier);
+
+            const result = DigestAlgorithm.getDigestAlgorithm(
               signer.digestAlgorithm.identifier,
-              signedData,
-            );
+            ).digest(signedData);
             const digest = attribute.value
               ?.parseValueAsChildren()
               .at(0)
@@ -149,16 +147,19 @@ export class SignedDataVerifier
         }
 
         const publicKey = await this.publicKeyFactory.create(
-          certificate.getSubjectPublicKeyInfo().getBytes(),
+          certificate.getSubjectPublicKeyInfo(),
         );
 
+        // TODO: Take digest algorithm from pkcs7 root instead of signer info if missing
         const inputData = new Uint8Array(
           signer.authenticatedAttributes?.getBytes() as Uint8Array,
         );
         inputData.set([0x31]);
         if (
           !(await publicKey.verifySignature(
-            signer.digestAlgorithm.identifier,
+            DigestAlgorithm.getDigestAlgorithm(
+              signer.digestAlgorithm.identifier,
+            ),
             inputData,
             signer.getSignature(),
           ))
@@ -173,25 +174,6 @@ export class SignedDataVerifier
     return VerificationResult.success();
   }
 
-  private digest(oid: string, data: Uint8Array): Uint8Array {
-    switch (oid) {
-      case "2.16.840.1.101.3.4.2.1":
-        return sha256(data);
-      case "2.16.840.1.101.3.4.2.2":
-        return sha384(data);
-      case "2.16.840.1.101.3.4.2.3":
-        return sha512(data);
-      case "2.16.840.1.101.3.4.2.4":
-        return sha224(data);
-      case "2.16.840.1.101.3.4.2.5":
-        return sha512_224(data);
-      case "2.16.840.1.101.3.4.2.6":
-        return sha512_256(data);
-      default:
-        throw new Error("Invalid signer info digest algorithm");
-    }
-  }
-
   // TODO: Verify CRL
   private async verifyCertificateChain(
     link: ChainLink,
@@ -204,12 +186,12 @@ export class SignedDataVerifier
       }
 
       const publicKey = await this.publicKeyFactory.create(
-        parentCertificate.getSubjectPublicKeyInfo().getBytes(),
+        parentCertificate.getSubjectPublicKeyInfo(),
       );
 
       if (
         await publicKey.verifySignature(
-          certificate.algorithm,
+          this.getSignatureDigestAlgorithm(certificate.signatureAlgorithm),
           certificate.getTbsCertificateBytes(),
           certificate.getSignatureBytes(),
         )
@@ -221,6 +203,19 @@ export class SignedDataVerifier
     }
 
     return VerificationResult.failed();
+  }
+
+  private getSignatureDigestAlgorithm(algorithm: string) {
+    switch (algorithm) {
+      case "1.2.840.113549.1.1.11":
+        return DigestAlgorithm.SHA256;
+      case "1.2.840.113549.1.1.12":
+        return DigestAlgorithm.SHA384;
+      case "1.2.840.113549.1.1.13":
+        return DigestAlgorithm.SHA512;
+      default:
+        throw new Error("Unsupported digest algorithm");
+    }
   }
 
   private buildCertificateChain(
@@ -249,135 +244,5 @@ export class SignedDataVerifier
         this.buildCertificateChain(parent, signedData),
       ),
     };
-  }
-}
-
-export interface SpkiFactory {
-  create(bytes: Uint8Array): Promise<PublicKey>;
-}
-
-export interface PublicKey {
-  verifySignature(
-    algorithm: string,
-    data: Uint8Array,
-    signature: Uint8Array,
-  ): Promise<boolean>;
-}
-
-export class NodeSpkiFactory implements SpkiFactory {
-  public async create(bytes: Uint8Array): Promise<PublicKey> {
-    return new NodePublicKey(
-      crypto.createPublicKey({
-        key: bytes as Buffer,
-        format: "der",
-        type: "spki",
-      }),
-    );
-  }
-}
-
-export class NodePublicKey implements PublicKey {
-  private readonly publicKey: crypto.KeyObject;
-
-  public constructor(key: crypto.KeyObject) {
-    this.publicKey = key;
-  }
-
-  public async verifySignature(
-    algorithm: string,
-    data: Uint8Array,
-    signature: Uint8Array,
-  ): Promise<boolean> {
-    return crypto.verify(
-      this.getAlgorithm(algorithm),
-      data,
-      this.publicKey,
-      signature,
-    );
-  }
-
-  private getAlgorithm(algorithm: string) {
-    switch (algorithm) {
-      case "1.2.840.113549.1.1.11":
-        return "sha256WithRSAEncryption";
-      case "1.2.840.113549.1.1.12":
-        return "sha384WithRSAEncryption";
-      case "1.2.840.113549.1.1.13":
-        return "sha512WithRSAEncryption";
-      default:
-        throw new Error("Unsupported algorithm");
-    }
-  }
-}
-
-export class BrowserPublicKey implements PublicKey {
-  private readonly publicKeyInfo: SubjectPublicKeyInfo;
-
-  public constructor(publicKeyInfo: SubjectPublicKeyInfo) {
-    this.publicKeyInfo = publicKeyInfo;
-  }
-
-  public async verifySignature(
-    algorithm: string,
-    data: Uint8Array,
-    signature: Uint8Array,
-  ): Promise<boolean> {
-    const publicKey = await crypto.subtle.importKey(
-      "spki",
-      this.publicKeyInfo.getBytes(),
-      this.getPublicKeyAlgorithmParams(algorithm),
-      false,
-      ["verify"],
-    );
-
-    return crypto.subtle.verify(
-      this.getVerifyAlgorithmParams(algorithm),
-      publicKey,
-      signature,
-      data,
-    );
-  }
-
-  private getVerifyAlgorithmParams(algorithm: string) {
-    switch (algorithm) {
-      case "1.2.840.113549.1.1.11":
-      case "1.2.840.113549.1.1.12":
-      case "1.2.840.113549.1.1.13":
-        return {
-          name: "RSASSA-PKCS1-v1_5",
-        };
-      default:
-        throw new Error("Unsupported algorithm");
-    }
-  }
-
-  private getPublicKeyAlgorithmParams(algorithm: string) {
-    switch (algorithm) {
-      case "1.2.840.113549.1.1.11":
-        return {
-          name: "RSASSA-PKCS1-v1_5",
-          hash: "SHA-256",
-        };
-      case "1.2.840.113549.1.1.12":
-        return {
-          name: "RSASSA-PKCS1-v1_5",
-          hash: "SHA-384",
-        };
-      case "1.2.840.113549.1.1.13":
-        return {
-          name: "RSASSA-PKCS1-v1_5",
-          hash: "SHA-512",
-        };
-      default:
-        throw new Error("Unsupported algorithm");
-    }
-  }
-}
-
-export class BrowserSpkiFactory implements SpkiFactory {
-  async create(bytes: Uint8Array): Promise<PublicKey> {
-    return new BrowserPublicKey(
-      new SubjectPublicKeyInfo(new Asn1ByteInputStream(bytes).readAsn1Object()),
-    );
   }
 }

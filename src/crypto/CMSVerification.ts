@@ -3,7 +3,8 @@ import {
   Pkcs7ContentType,
   Pkcs7EnvelopeVerifier,
 } from "./pkcs7/Pkcs7EnvelopeVerifier";
-import { NodeSpkiFactory, SignedDataVerifier } from "./pkcs7/SignedDataVerifier";
+import { SignedDataVerifier } from "./pkcs7/SignedDataVerifier";
+import { NodeSpkiFactory } from "./pkcs7/NodeSpkiFactory";
 
 export class CMSVerification {
   /**
