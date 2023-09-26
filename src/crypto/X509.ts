@@ -2,7 +2,7 @@ import forge from "node-forge";
 import { BigInteger } from "big-integer";
 import { DataHash } from "../hash/DataHash.js";
 import { HashAlgorithm } from "../hash/HashAlgorithm.js";
-import { SyncDataHasher } from "../hash/SyncDataHasher.js";
+import { DataHasher } from "../hash/DataHasher";
 import { ASCIIConverter } from "../strings/ASCIIConverter.js";
 
 /**
@@ -30,7 +30,7 @@ function hashData(
         `Unsupported algorithm: ${certificate.siginfo.algorithmOid}`
       );
   }
-  const hasher = new SyncDataHasher(hashAlgorithm);
+  const hasher = new DataHasher(hashAlgorithm);
   hasher.update(signedData);
   return hasher.digest();
 }

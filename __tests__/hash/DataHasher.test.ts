@@ -1,14 +1,14 @@
 import { HashAlgorithm } from "../../src/hash/HashAlgorithm";
-import { SyncDataHasher } from "../../src/hash/SyncDataHasher";
-import { NodeHasher } from "../../src/hash/NodeHasher";
+import { DataHasher } from "../../src/hash/DataHasher";
+import { NodeDataHasher } from "../../src/hash/NodeDataHasher";
 
 describe("Data hashers work similarly", () => {
   it("sha256 is the same", () => {
     const dataToBeHashed = new Uint8Array([1, 2, 3, 4]);
 
     const hashAlg = HashAlgorithm.SHA2_256;
-    const asyncHasher = new NodeHasher(hashAlg);
-    const syncHasher = new SyncDataHasher(hashAlg);
+    const asyncHasher = new NodeDataHasher(hashAlg);
+    const syncHasher = new DataHasher(hashAlg);
 
     syncHasher.update(dataToBeHashed);
     const syncResult = syncHasher.digest();
@@ -23,8 +23,8 @@ describe("Data hashers work similarly", () => {
     const dataToBeHashed = new Uint8Array([1, 2, 3, 4]);
 
     const hashAlg = HashAlgorithm.SHA1;
-    const asyncHasher = new NodeHasher(hashAlg);
-    const syncHasher = new SyncDataHasher(hashAlg);
+    const asyncHasher = new NodeDataHasher(hashAlg);
+    const syncHasher = new DataHasher(hashAlg);
 
     syncHasher.update(dataToBeHashed);
     const syncResult = syncHasher.digest();
@@ -37,7 +37,7 @@ describe("Data hashers work similarly", () => {
 
   it("Not supported hash algorithm throws error", () => {
     expect(() => {
-      new SyncDataHasher(HashAlgorithm.SHA3_256);
+      new DataHasher(HashAlgorithm.SHA3_256);
     }).toThrow(/Hash algorithm is not implemented: SHA3-256./);
   });
 
@@ -47,7 +47,7 @@ describe("Data hashers work similarly", () => {
     // Sync Hash
     let startTime = new Date();
     for (let i = 0; i < 100000; i++) {
-      const syncHasher = new SyncDataHasher(HashAlgorithm.SHA2_256);
+      const syncHasher = new DataHasher(HashAlgorithm.SHA2_256);
       syncHasher.update(dataToBeHashed);
       syncHasher.digest();
     }
@@ -59,7 +59,7 @@ describe("Data hashers work similarly", () => {
     // ASync Hash
     startTime = new Date();
     for (let i = 0; i < 100000; i++) {
-      const asyncHasher = new NodeHasher(HashAlgorithm.SHA2_256);
+      const asyncHasher = new NodeDataHasher(HashAlgorithm.SHA2_256);
       asyncHasher.update(dataToBeHashed);
       await asyncHasher.digest();
     }

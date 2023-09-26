@@ -200,7 +200,7 @@ export class HashAlgorithm {
     status: AlgorithmStatus,
     deprecatedSince: number | null = null,
     obsoleteSince: number | null = null,
-    alternativeNames: string[] = []
+    alternativeNames: string[] = [],
   ) {
     this.id = id;
     this.name = name;
@@ -352,7 +352,7 @@ const SHA1 = new HashAlgorithm(
   "SHA-1",
   20,
   AlgorithmStatus.NotTrusted,
-  1467331200
+  1467331200,
 );
 const SHA2_256 = new HashAlgorithm(
   0x1,
@@ -361,13 +361,13 @@ const SHA2_256 = new HashAlgorithm(
   AlgorithmStatus.Normal,
   null,
   null,
-  ["DEFAULT", "SHA2-256", "SHA2"]
+  ["DEFAULT", "SHA2-256", "SHA2"],
 );
 const RIPEMD160 = new HashAlgorithm(
   0x2,
   "RIPEMD160",
   20,
-  AlgorithmStatus.Normal
+  AlgorithmStatus.Normal,
 );
 const SHA2_384 = new HashAlgorithm(
   0x4,
@@ -376,7 +376,7 @@ const SHA2_384 = new HashAlgorithm(
   AlgorithmStatus.Normal,
   null,
   null,
-  ["SHA2-384"]
+  ["SHA2-384"],
 );
 const SHA2_512 = new HashAlgorithm(
   0x5,
@@ -385,30 +385,30 @@ const SHA2_512 = new HashAlgorithm(
   AlgorithmStatus.Normal,
   null,
   null,
-  ["SHA2-512"]
+  ["SHA2-512"],
 );
 const SHA3_224 = new HashAlgorithm(
   0x7,
   "SHA3-224",
   28,
-  AlgorithmStatus.NotImplemented
+  AlgorithmStatus.NotImplemented,
 );
 const SHA3_256 = new HashAlgorithm(
   0x8,
   "SHA3-256",
   32,
-  AlgorithmStatus.NotImplemented
+  AlgorithmStatus.NotImplemented,
 );
 const SHA3_384 = new HashAlgorithm(
   0x9,
   "SHA3-384",
   48,
-  AlgorithmStatus.NotImplemented
+  AlgorithmStatus.NotImplemented,
 );
 const SHA3_512 = new HashAlgorithm(
   0xa,
   "SHA3-512",
   64,
-  AlgorithmStatus.NotImplemented
+  AlgorithmStatus.NotImplemented,
 );
 const SM3 = new HashAlgorithm(0xb, "SM3", 32, AlgorithmStatus.NotImplemented);

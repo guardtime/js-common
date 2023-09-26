@@ -10,17 +10,14 @@ export class UnsignedLongCoder {
    */
   static decode(
     data: Uint8Array,
-    offset: number,
-    length: number
+    offset?: number,
+    length?: number,
   ): BigInteger.BigInteger {
+    offset = offset ?? 0;
+    length = length ?? data.length;
+
     if (offset < 0 || length < 0 || offset + length > data.length) {
       throw new Error("Index out of bounds");
-    }
-
-    if (length > 8) {
-      throw new Error(
-        "Integers of at most 63 unsigned bits supported by this implementation."
-      );
     }
 
     let t = BigInteger.zero;

@@ -18,80 +18,66 @@
  * reserves and retains all trademark rights.
  */
 
+import { createHash, Hash } from "crypto";
 import { DataHash } from "./DataHash.js";
 import { HashAlgorithm } from "./HashAlgorithm.js";
-import { HashingError } from "./HashingError.js";
 import { Hasher } from "./Hasher.js";
+import { HashingError } from "./HashingError.js";
 
-/**
- * Does hashing with asynchronous way
- */
-export class WebHasher implements Hasher {
+export class NodeDataHasher implements Hasher {
   private readonly _algorithm: HashAlgorithm;
-  private _data: Uint8Array;
+  private _hasher: Hash;
 
+  /**
+   * Get hasher algorithm
+   * @return HashAlgorithm
+   */
   public get algorithm(): HashAlgorithm {
     return this._algorithm;
   }
 
   /**
-   * Create DataHasher instance the hash algorithm
-   * @param {HashAlgorithm} hashAlgorithm
+   * Create Node Hasher
+   * @param hashAlgorithm HashAlgorithm
    */
   constructor(hashAlgorithm: HashAlgorithm) {
-    if (
-      !hashAlgorithm.isImplemented() ||
-      hashAlgorithm === HashAlgorithm.RIPEMD160
-    ) {
+    if (!hashAlgorithm.isImplemented()) {
       throw new HashingError(
         `Hash algorithm is not implemented: ${hashAlgorithm.name}.`
       );
     }
 
     this._algorithm = hashAlgorithm;
-    this._data = new Uint8Array(0);
+    this._hasher = createHash(this.algorithm.name.replace("-", ""));
   }
 
   /**
-   * Add data for hashing
-   * @param {Uint8Array} data byte array
-   * @returns {WebHasher}
+   * Digest the final result
+   * @return Promise<DataHash>
+   */
+  async digest(): Promise<DataHash> {
+    return DataHash.create(
+      this._algorithm,
+      new Uint8Array(this._hasher.digest())
+    );
+  }
+
+  /**
+   * Update the hasher content
+   * @param data byte array
    */
   update(data: Uint8Array): Hasher {
-    if (!(data instanceof Uint8Array)) {
-      throw new HashingError("Invalid array for hashing");
-    }
-
-    const previousData = this._data;
-    this._data = new Uint8Array(previousData.length + data.length);
-    this._data.set(previousData);
-    this._data.set(data, previousData.length);
+    this._hasher.update(data);
 
     return this;
   }
 
   /**
-   * Create hashing Promise for getting result DataHash
-   * @returns Promise.<DataHash, Error>
-   */
-  async digest(): Promise<DataHash> {
-    return DataHash.create(
-      this._algorithm,
-      new Uint8Array(
-        await window.crypto.subtle.digest(
-          { name: this._algorithm.name },
-          this._data
-        )
-      )
-    );
-  }
-
-  /**
-   * Resets the hash calculation.
-   * @returns {WebHasher} The same data hasher object object for chaining calls.
+   * Update the hasher content
+   * @param data byte array
    */
   reset(): Hasher {
-    this._data = new Uint8Array(0);
+    this._hasher = createHash(this.algorithm.name.replace("-", ""));
 
     return this;
   }
