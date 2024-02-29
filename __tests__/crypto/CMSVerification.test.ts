@@ -1,8 +1,10 @@
 import { Base64Coder } from "../../src/coders/Base64Coder";
-import { CMSVerification } from "../../src/crypto/CMSVerification";
 import { Utf8Converter } from "../../src/strings/Utf8Converter";
 
 import { NodeSpkiFactory } from "../../src/crypto/pkcs7/NodeSpkiFactory";
+import { Pkcs7Envelope } from "../../src/crypto/pkcs7/Pkcs7Envelope";
+import { Pkcs7ContentType, Pkcs7EnvelopeVerifier } from "../../src/crypto/pkcs7/Pkcs7EnvelopeVerifier";
+import { SignedDataVerifier } from "../../src/crypto/pkcs7/SignedDataVerifier";
 
 const trustedCertificate =
   "MIIEkjCCA3qgAwIBAgIQCgFBQgAAAVOFc2oLheynCDANBgkqhkiG9w0BAQsFADA/" +
@@ -131,13 +133,25 @@ const exampleSignatureAttached =
 
 describe("CMS", () => {
   it("verify detached signature", async () => {
-    const verify = await CMSVerification.verify(
-      new NodeSpkiFactory(),
+    const envelope = Pkcs7Envelope.createFromBytes(
       Base64Coder.decode(exampleSignatureDetached),
-      Base64Coder.decode(trustedCertificate),
-      "CN=*.z.guardtime.com",
+    );
+    const verifier = new Pkcs7EnvelopeVerifier();
+    verifier.registerVerifier(
+      Pkcs7ContentType.SIGNED_DATA,
+      new SignedDataVerifier(
+        new NodeSpkiFactory(),
+        Base64Coder.decode(trustedCertificate),
+        "CN=*.z.guardtime.com",
+      ),
+    );
+
+    // TODO: Return verification result
+    const result = await verifier.verify(
+      envelope,
       Utf8Converter.ToBytes(exampleContent),
     );
-    expect(verify).toBe(true);
+    
+    expect(result.status).toBe(true);
   });
 });

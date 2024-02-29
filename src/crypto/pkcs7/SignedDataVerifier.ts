@@ -8,6 +8,9 @@ import { SignedData } from "./SignedData";
 import { ChainLink } from "./ChainLink";
 import { SpkiFactory } from "./SpkiFactory";
 import { DigestAlgorithm } from "./DigestAlgorithm";
+import { SignerInfo } from "./SignerInfo";
+import { Rule } from "../../verification/Rule";
+import { Result, ResultCode } from "../../verification/Result";
 
 enum Pkcs9AttributeType {
   CONTENT_TYPE = "1.2.840.113549.1.9.3",
@@ -38,13 +41,8 @@ export class SignedDataVerifier
     content: SignedData,
     signedData: Uint8Array,
   ): Promise<VerificationResult> {
-    if (!(content instanceof SignedData)) {
-      return VerificationResult.error(
-        "Pkcs7 content is not instance of SignedData",
-      );
-    }
-
     for (const signer of content.signerInfos) {
+      // Signer has certificates
       const certificates = content.certificates.filter((certificate) =>
         certificate.serialNumber.eq(signer.issuerAndSerialNumber.serialNumber),
       );
@@ -52,6 +50,7 @@ export class SignedDataVerifier
         return VerificationResult.error("No certificates found for SignerInfo");
       }
 
+      // Certificate has signer as issuer
       for (const certificate of certificates) {
         if (!certificate.issuer.equals(signer.issuerAndSerialNumber.issuer)) {
           return VerificationResult.error(
@@ -59,6 +58,7 @@ export class SignedDataVerifier
           );
         }
 
+        // Certificate selector matches required selector
         const selectors = this.selectors.split(",");
         for (const selector of selectors) {
           // TODO: Fix selector verification
@@ -69,74 +69,77 @@ export class SignedDataVerifier
           }
         }
 
-        if (signer.authenticatedAttributes) {
-          if (
-            signer.authenticatedAttributes.get(Pkcs9AttributeType.CONTENT_TYPE)
-              .length === 0
-          ) {
-            return VerificationResult.error(
-              "Content type attribute is missing",
-            );
-          }
+        // Check if authenticated attributes exist for signer
+        if (!signer.authenticatedAttributes) {
+          return VerificationResult.error("Missing authenticated attributes");
+        }
 
-          const messageDigests = signer.authenticatedAttributes.get(
-            Pkcs9AttributeType.MESSAGE_DIGEST,
+        // Check if signer has content type in authenticated attributes
+        if (
+          signer.authenticatedAttributes.get(Pkcs9AttributeType.CONTENT_TYPE)
+            .length === 0
+        ) {
+          return VerificationResult.error("Content type attribute is missing");
+        }
+
+        // Check if message digest exist in authenticated attributes
+        const messageDigests = signer.authenticatedAttributes.get(
+          Pkcs9AttributeType.MESSAGE_DIGEST,
+        );
+        if (messageDigests.length === 0) {
+          return VerificationResult.error(
+            "Message digest attribute is missing",
           );
-          if (messageDigests.length === 0) {
+        }
+
+        // Check if message digest are correct
+        for (const attribute of messageDigests) {
+          //switch (signer.digestAlgorithm.identifier);
+
+          const result = DigestAlgorithm.getDigestAlgorithm(
+            signer.digestAlgorithm.identifier,
+          ).digest(signedData);
+          const digest = attribute.value
+            ?.parseValueAsChildren()
+            .at(0)
+            ?.parseValueAsBytes();
+
+          if (!digest || HexCoder.encode(result) !== HexCoder.encode(digest)) {
             return VerificationResult.error(
-              "Message digest attribute is missing",
+              "Data digest did not match signature message digest",
             );
           }
+        }
 
-          for (const attribute of messageDigests) {
-            //switch (signer.digestAlgorithm.identifier);
-
-            const result = DigestAlgorithm.getDigestAlgorithm(
-              signer.digestAlgorithm.identifier,
-            ).digest(signedData);
-            const digest = attribute.value
+        // Check if signing time is in attributes
+        const validityAttributes = signer.authenticatedAttributes.get(
+          Pkcs9AttributeType.SIGNING_TIME,
+        );
+        // Validate certificate against time in attributes or against current time
+        if (validityAttributes) {
+          for (const attribute of validityAttributes) {
+            const attributeValue = attribute.value
               ?.parseValueAsChildren()
-              .at(0)
-              ?.parseValueAsBytes();
+              .at(0);
 
-            if (
-              !digest ||
-              HexCoder.encode(result) !== HexCoder.encode(digest)
-            ) {
-              return VerificationResult.error(
-                "Data digest did not match signature message digest",
-              );
-            }
-          }
-
-          const validityAttributes = signer.authenticatedAttributes.get(
-            Pkcs9AttributeType.SIGNING_TIME,
-          );
-          if (validityAttributes) {
-            for (const attribute of validityAttributes) {
-              const attributeValue = attribute.value
-                ?.parseValueAsChildren()
-                .at(0);
-
-              const time = attributeValue?.parseValueAsTime();
-              if (!time || !certificate.isValidAt(time)) {
-                return VerificationResult.error(
-                  "Certificate is not valid in given signing time",
-                );
-              }
-            }
-          } else {
-            if (!certificate.isValidAt(moment())) {
+            const time = attributeValue?.parseValueAsTime();
+            if (!time || !certificate.isValidAt(time)) {
               return VerificationResult.error(
                 "Certificate is not valid in given signing time",
               );
             }
           }
+        } else {
+          if (!certificate.isValidAt(moment())) {
+            return VerificationResult.error(
+              "Certificate is not valid in given signing time",
+            );
+          }
         }
 
+        // Validate certificate chain
         const chain = this.buildCertificateChain(certificate, content);
 
-        // Verify certificates
         const certificateVerificationResult = await this.verifyCertificateChain(
           chain,
         );
@@ -146,6 +149,7 @@ export class SignedDataVerifier
           );
         }
 
+        // Verify pkcs7 signature
         const publicKey = await this.publicKeyFactory.create(
           certificate.getSubjectPublicKeyInfo(),
         );
