@@ -3,8 +3,12 @@ import { Utf8Converter } from "../../src/strings/Utf8Converter";
 
 import { NodeSpkiFactory } from "../../src/crypto/pkcs7/NodeSpkiFactory";
 import { Pkcs7Envelope } from "../../src/crypto/pkcs7/Pkcs7Envelope";
-import { Pkcs7ContentType, Pkcs7EnvelopeVerifier } from "../../src/crypto/pkcs7/Pkcs7EnvelopeVerifier";
+import {
+  Pkcs7ContentType,
+  Pkcs7EnvelopeVerifier,
+} from "../../src/crypto/pkcs7/Pkcs7EnvelopeVerifier";
 import { SignedDataVerifier } from "../../src/crypto/pkcs7/SignedDataVerifier";
+import { ResultCode } from "../../src/verification/Result";
 
 const trustedCertificate =
   "MIIEkjCCA3qgAwIBAgIQCgFBQgAAAVOFc2oLheynCDANBgkqhkiG9w0BAQsFADA/" +
@@ -151,7 +155,9 @@ describe("CMS", () => {
       envelope,
       Utf8Converter.ToBytes(exampleContent),
     );
-    
-    expect(result.status).toBe(true);
+
+    console.log(result.toString())
+
+    expect(result.getResultCode()).toBe(ResultCode.OK);
   });
 });

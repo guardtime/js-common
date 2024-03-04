@@ -1,6 +1,6 @@
 import { Pkcs7EnvelopeContentVerifier } from "./Pkcs7EnvelopeContentVerifier";
 import { Pkcs7Envelope } from "./Pkcs7Envelope";
-import { VerificationResult } from "./VerificationResult";
+import { Result } from "../../verification/Result";
 
 export enum Pkcs7ContentType {
   SIGNED_DATA = "1.2.840.113549.1.7.2",
@@ -22,7 +22,7 @@ export class Pkcs7EnvelopeVerifier {
   public async verify(
     envelope: Pkcs7Envelope,
     signedData: Uint8Array,
-  ): Promise<VerificationResult> {
+  ): Promise<Result<unknown>> {
     const verifier = this.verifiers.get(envelope.contentType);
     if (verifier === undefined) {
       throw new Error(

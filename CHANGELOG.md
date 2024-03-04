@@ -36,9 +36,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - UTF8 encoder and decoder
   - HashAlgorithm getByName is incasesensitive and allows to get
     SHA-256 with the name of DEFAULT.
+## [2.0.0] - 2024-03-01
+### Changed
+  - Removed node-forge dependency, add new hashing library. Also added
+    PKCS#7 verification.
 
 [Unreleased]: https://github.com/guardtime/js-common/tree/master
 [1.0.0]: https://github.com/guardtime/js-common/tree/v1.0.0
 [1.0.1]: https://github.com/guardtime/js-common/tree/v1.0.1
 [1.0.2]: https://github.com/guardtime/js-common/tree/v1.0.2
 [1.0.3]: https://github.com/guardtime/js-common/tree/v1.0.3
+[2.0.0]: https://github.com/guardtime/js-common/tree/v2.0.0
