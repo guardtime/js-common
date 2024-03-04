@@ -9,7 +9,7 @@ describe("UnsignedLongCoder", () => {
 
     expect(biFromCoder.equals(bi)).toBe(true);
     expect(UnsignedLongCoder.encodeWithPadding(BigInteger(1000))).toEqual(
-      new Uint8Array([0, 0, 0, 0, 0, 0, 3, 232])
+      new Uint8Array([0, 0, 0, 0, 0, 0, 3, 232]),
     );
   });
 });

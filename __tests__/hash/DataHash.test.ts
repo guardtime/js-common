@@ -8,17 +8,17 @@ describe("DataHash", () => {
     imprint.set([1]);
     const dataHash = new DataHash(imprint);
     expect(dataHash.toString()).toEqual(
-      "010000000000000000000000000000000000000000000000000000000000000000"
+      "010000000000000000000000000000000000000000000000000000000000000000",
     );
   });
 
   it("create with algorithm and data", () => {
     const dataHash = DataHash.create(
       HashAlgorithm.SHA2_256,
-      new Uint8Array(32)
+      new Uint8Array(32),
     );
     expect(dataHash.toString()).toEqual(
-      "010000000000000000000000000000000000000000000000000000000000000000"
+      "010000000000000000000000000000000000000000000000000000000000000000",
     );
   });
 
@@ -30,7 +30,7 @@ describe("DataHash", () => {
       new DataHash(imprint);
     } catch (e) {
       expect(e).toEqual(
-        new HashingError(`Imprint contains invalid hash algorithm id: 255.`)
+        new HashingError(`Imprint contains invalid hash algorithm id: 255.`),
       );
     }
   });
@@ -43,7 +43,9 @@ describe("DataHash", () => {
       new DataHash(imprint);
     } catch (e) {
       expect(e).toEqual(
-        new HashingError("Imprint digest length does not match with algorithm.")
+        new HashingError(
+          "Imprint digest length does not match with algorithm.",
+        ),
       );
     }
   });
@@ -54,7 +56,7 @@ describe("DataHash", () => {
     const firstDataHash = new DataHash(imprint);
     const secondDataHash = DataHash.create(
       HashAlgorithm.SHA2_256,
-      new Uint8Array(32)
+      new Uint8Array(32),
     );
 
     expect(firstDataHash.equals(secondDataHash)).toBeTruthy();
@@ -86,14 +88,14 @@ describe("DataHash", () => {
     expect(DataHash.equals({ imprint: [] }, { imprint: null })).toBeFalsy();
     expect(
       // @ts-ignore
-      DataHash.equals({ imprint: new Uint8Array(32) }, { imprint: {} })
+      DataHash.equals({ imprint: new Uint8Array(32) }, { imprint: {} }),
     ).toBeFalsy();
     expect(
       DataHash.equals(
         DataHash.create(HashAlgorithm.SHA2_256, new Uint8Array(32)),
         // @ts-ignore
-        { imprint: {} }
-      )
+        { imprint: {} },
+      ),
     ).toBeFalsy();
     /* eslint-enable @typescript-eslint/ban-ts-comment */
   });
@@ -102,8 +104,8 @@ describe("DataHash", () => {
     expect(
       DataHash.equals(
         DataHash.create(HashAlgorithm.SHA2_256, new Uint8Array(32)),
-        DataHash.create(HashAlgorithm.SHA2_256, new Uint8Array(32))
-      )
+        DataHash.create(HashAlgorithm.SHA2_256, new Uint8Array(32)),
+      ),
     ).toBeTruthy();
 
     const imprint = new Uint8Array(33);
@@ -115,8 +117,8 @@ describe("DataHash", () => {
           imprint,
           value: new Uint8Array(32),
           hashAlgorithm: HashAlgorithm.SHA2_256,
-        }
-      )
+        },
+      ),
     ).toBeTruthy();
   });
 });

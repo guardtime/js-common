@@ -156,7 +156,7 @@ describe("CMS", () => {
       Utf8Converter.ToBytes(exampleContent),
     );
 
-    console.log(result.toString())
+    console.log(result.toString());
 
     expect(result.getResultCode()).toBe(ResultCode.OK);
   });

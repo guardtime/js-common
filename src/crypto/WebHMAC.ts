@@ -11,11 +11,11 @@ export class WebHMAC {
   static async digest(
     algorithm: HashAlgorithm,
     key: Uint8Array,
-    data: Uint8Array
+    data: Uint8Array,
   ): Promise<Uint8Array> {
     if (!algorithm.isImplemented() || algorithm === HashAlgorithm.RIPEMD160) {
       throw new HashingError(
-        `Hash algorithm is not implemented: ${algorithm.name}.`
+        `Hash algorithm is not implemented: ${algorithm.name}.`,
       );
     }
 
@@ -27,7 +27,7 @@ export class WebHMAC {
         hash: { name: algorithm.name },
       },
       false,
-      ["sign"]
+      ["sign"],
     );
 
     const bytes = await window.crypto.subtle.sign(
@@ -36,7 +36,7 @@ export class WebHMAC {
         hash: { name: algorithm.name },
       },
       hmacKey,
-      data
+      data,
     );
 
     return new Uint8Array(bytes);

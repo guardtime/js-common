@@ -17,7 +17,7 @@ export type TypedArray =
  */
 export function compareUint8Arrays(
   arr1: Uint8Array,
-  arr2: Uint8Array
+  arr2: Uint8Array,
 ): boolean {
   if (arr1.length !== arr2.length) {
     return false;
@@ -40,7 +40,7 @@ export function compareUint8Arrays(
  */
 export function compareArrayEquals<T extends IEquals>(
   arr1: T[],
-  arr2: T[]
+  arr2: T[],
 ): boolean {
   if (arr1.length !== arr2.length) {
     return false;

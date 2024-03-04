@@ -23,9 +23,7 @@ export class SignerInfo {
       this.authenticatedAttributes = new Attributes(children[position++]);
     }
 
-    this.signatureAlgorithm = new AlgorithmIdentifier(
-      children[position++],
-    );
+    this.signatureAlgorithm = new AlgorithmIdentifier(children[position++]);
     this.signature = children[position++].parseValueAsBytes();
     this.unauthenticatedAttributes = children.at(position)
       ? new Attributes(children.at(position) as Asn1Object)

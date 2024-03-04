@@ -43,7 +43,7 @@ export class NodeDataHasher implements Hasher {
   constructor(hashAlgorithm: HashAlgorithm) {
     if (!hashAlgorithm.isImplemented()) {
       throw new HashingError(
-        `Hash algorithm is not implemented: ${hashAlgorithm.name}.`
+        `Hash algorithm is not implemented: ${hashAlgorithm.name}.`,
       );
     }
 
@@ -58,7 +58,7 @@ export class NodeDataHasher implements Hasher {
   async digest(): Promise<DataHash> {
     return DataHash.create(
       this._algorithm,
-      new Uint8Array(this._hasher.digest())
+      new Uint8Array(this._hasher.digest()),
     );
   }
 

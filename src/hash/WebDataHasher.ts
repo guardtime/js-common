@@ -44,7 +44,7 @@ export class WebDataHasher implements Hasher {
       hashAlgorithm === HashAlgorithm.RIPEMD160
     ) {
       throw new HashingError(
-        `Hash algorithm is not implemented: ${hashAlgorithm.name}.`
+        `Hash algorithm is not implemented: ${hashAlgorithm.name}.`,
       );
     }
 
@@ -80,9 +80,9 @@ export class WebDataHasher implements Hasher {
       new Uint8Array(
         await window.crypto.subtle.digest(
           { name: this._algorithm.name },
-          this._data
-        )
-      )
+          this._data,
+        ),
+      ),
     );
   }
 

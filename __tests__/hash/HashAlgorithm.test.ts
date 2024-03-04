@@ -27,7 +27,7 @@ describe("HashAlgorithm", () => {
         id: 1,
         length: 32,
         name: "SHA-256",
-      })
+      }),
     ).toBeTruthy();
   });
 });

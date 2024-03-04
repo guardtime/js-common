@@ -12,7 +12,7 @@ export interface ICryptoHMAC {
   digest(
     algorithm: HashAlgorithm,
     key: Uint8Array,
-    data: Uint8Array
+    data: Uint8Array,
   ): Promise<Uint8Array>;
 }
 
@@ -24,6 +24,6 @@ export interface ICryptoRSA {
   verify(
     certificateBytes: Uint8Array,
     signedData: Uint8Array,
-    signature: Uint8Array
+    signature: Uint8Array,
   ): Promise<boolean>;
 }

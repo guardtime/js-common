@@ -246,9 +246,8 @@ export class SignedDataVerifier
       // Validate certificate chain
       const chain = this.buildCertificateChain(certificate, certificateList);
 
-      const certificateVerificationResult = await this.verifyCertificateChain(
-        chain,
-      );
+      const certificateVerificationResult =
+        await this.verifyCertificateChain(chain);
       results.push(certificateVerificationResult);
       if (certificateVerificationResult.getResultCode() !== ResultCode.OK) {
         return results;
