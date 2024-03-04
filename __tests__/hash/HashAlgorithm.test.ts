@@ -1,4 +1,4 @@
-import { HashAlgorithm } from "../../src/hash/HashAlgorithm";
+import { HashAlgorithm } from "../../src/hash/HashAlgorithm.js";
 
 describe("HashAlgorithm", () => {
   test("get hash algorithm by name", () => {

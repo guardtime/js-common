@@ -1,10 +1,10 @@
-import { HashAlgorithm } from "../hash/HashAlgorithm.js";
-import { HashingError } from "../hash/HashingError.js";
 import { sha256 } from "@noble/hashes/sha256";
 import { hmac } from "@noble/hashes/hmac";
 import { sha1 } from "@noble/hashes/sha1";
 import { sha384, sha512 } from "@noble/hashes/sha512";
 import { ripemd160 } from "@noble/hashes/ripemd160";
+import { HashAlgorithm } from "../hash/HashAlgorithm.js";
+import { HashingError } from "../hash/HashingError.js";
 
 export class HMAC {
   /**

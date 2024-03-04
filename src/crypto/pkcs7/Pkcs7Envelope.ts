@@ -1,7 +1,7 @@
-import { Asn1Object } from "../../asn1/Asn1Object";
+import { Asn1Object } from "../../asn1/Asn1Object.js";
 
-import { SignedData } from "./SignedData";
-import { Pkcs7ContentType } from "./Pkcs7EnvelopeVerifier";
+import { SignedData } from "./SignedData.js";
+import { Pkcs7ContentType } from "./Pkcs7EnvelopeVerifier.js";
 
 export class Pkcs7Envelope {
   public readonly contentType: Pkcs7ContentType;

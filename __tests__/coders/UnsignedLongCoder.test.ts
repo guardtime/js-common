@@ -1,5 +1,5 @@
 import BigInteger from "big-integer";
-import { UnsignedLongCoder } from "../../src/coders/UnsignedLongCoder";
+import { UnsignedLongCoder } from "../../src/coders/UnsignedLongCoder.js";
 
 describe("UnsignedLongCoder", () => {
   it("encode/decode works", () => {

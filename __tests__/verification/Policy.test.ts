@@ -1,6 +1,6 @@
-import { Rule } from "../../src/verification/Rule";
-import { Result, ResultCode } from "../../src/verification/Result";
-import { Policy } from "../../src/verification/Policy";
+import { Rule } from "../../src/verification/Rule.js";
+import { Result, ResultCode } from "../../src/verification/Result.js";
+import { Policy } from "../../src/verification/Policy.js";
 
 class TestRule extends Rule<boolean, string> {
   public constructor(name: string) {

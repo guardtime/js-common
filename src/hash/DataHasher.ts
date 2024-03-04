@@ -25,7 +25,7 @@ import { ripemd160 } from "@noble/hashes/ripemd160";
 import { DataHash } from "./DataHash.js";
 import { HashAlgorithm } from "./HashAlgorithm.js";
 import { HashingError } from "./HashingError.js";
-import { Hasher } from "./Hasher";
+import { Hasher } from "./Hasher.js";
 
 interface MessageDigest {
   update(buf: Uint8Array): this;

@@ -1,8 +1,7 @@
-import { SubjectPublicKeyInfo } from "./SubjectPublicKeyInfo";
 import crypto from "node:crypto";
-
-import { PublicKey } from "./PublicKey";
-import { DigestAlgorithm } from "./DigestAlgorithm";
+import { SubjectPublicKeyInfo } from "./SubjectPublicKeyInfo.js";
+import { PublicKey } from "./PublicKey.js";
+import { DigestAlgorithm } from "./DigestAlgorithm.js";
 
 export class BrowserPublicKey implements PublicKey {
   private readonly publicKeyInfo: SubjectPublicKeyInfo;

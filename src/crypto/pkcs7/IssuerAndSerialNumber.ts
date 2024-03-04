@@ -1,6 +1,6 @@
-import { RDNSequence } from "./RDNSequence";
 import BigInteger from "big-integer";
-import { Asn1Object } from "../../asn1/Asn1Object";
+import { RDNSequence } from "./RDNSequence.js";
+import { Asn1Object } from "../../asn1/Asn1Object.js";
 
 export class IssuerAndSerialNumber {
   public readonly issuer: RDNSequence;

@@ -1,5 +1,5 @@
-import { Attribute } from "./Attribute";
-import { Asn1Object } from "../../asn1/Asn1Object";
+import { Attribute } from "./Attribute.js";
+import { Asn1Object } from "../../asn1/Asn1Object.js";
 
 export class Attributes {
   private readonly bytes: Uint8Array;

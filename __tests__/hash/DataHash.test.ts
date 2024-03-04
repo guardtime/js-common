@@ -1,6 +1,6 @@
-import { HashAlgorithm } from "../../src/hash/HashAlgorithm";
-import { DataHash } from "../../src/hash/DataHash";
-import { HashingError } from "../../src/hash/HashingError";
+import { HashAlgorithm } from "../../src/hash/HashAlgorithm.js";
+import { DataHash } from "../../src/hash/DataHash.js";
+import { HashingError } from "../../src/hash/HashingError.js";
 
 describe("DataHash", () => {
   it("create with imprint", () => {

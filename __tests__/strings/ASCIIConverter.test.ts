@@ -1,4 +1,4 @@
-import { ASCIIConverter } from "../../src/strings/ASCIIConverter";
+import { ASCIIConverter } from "../../src/strings/ASCIIConverter.js";
 
 describe("ASCIIConverter", () => {
   it("converter works", () => {

@@ -1,14 +1,14 @@
-import { Pkcs7EnvelopeContentVerifier } from "./Pkcs7EnvelopeContentVerifier";
-import { Asn1Object } from "../../asn1/Asn1Object";
-import { HexCoder } from "../../coders/HexCoder";
-import moment from "moment/moment";
-import { Certificate } from "./Certificate";
-import { SignedData } from "./SignedData";
-import { ChainLink } from "./ChainLink";
-import { SpkiFactory } from "./SpkiFactory";
-import { DigestAlgorithm } from "./DigestAlgorithm";
-import { Result, ResultCode } from "../../verification/Result";
-import { SignerInfo } from "./SignerInfo";
+import moment from "moment";
+import { Pkcs7EnvelopeContentVerifier } from "./Pkcs7EnvelopeContentVerifier.js";
+import { Asn1Object } from "../../asn1/Asn1Object.js";
+import { HexCoder } from "../../coders/HexCoder.js";
+import { Certificate } from "./Certificate.js";
+import { SignedData } from "./SignedData.js";
+import { ChainLink } from "./ChainLink.js";
+import { SpkiFactory } from "./SpkiFactory.js";
+import { DigestAlgorithm } from "./DigestAlgorithm.js";
+import { Result, ResultCode } from "../../verification/Result.js";
+import { SignerInfo } from "./SignerInfo.js";
 
 enum Pkcs9AttributeType {
   CONTENT_TYPE = "1.2.840.113549.1.9.3",

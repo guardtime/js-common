@@ -1,8 +1,8 @@
-import { AlgorithmIdentifier } from "./AlgorithmIdentifier";
-import { ContentInfo } from "./ContentInfo";
-import { Certificate } from "./Certificate";
-import { Asn1Object } from "../../asn1/Asn1Object";
-import { SignerInfo } from "./SignerInfo";
+import { AlgorithmIdentifier } from "./AlgorithmIdentifier.js";
+import { ContentInfo } from "./ContentInfo.js";
+import { Certificate } from "./Certificate.js";
+import { Asn1Object } from "../../asn1/Asn1Object.js";
+import { SignerInfo } from "./SignerInfo.js";
 
 export class SignedData {
   public readonly version: bigInt.BigInteger;

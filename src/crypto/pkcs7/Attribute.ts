@@ -1,4 +1,4 @@
-import { Asn1Object } from "../../asn1/Asn1Object";
+import { Asn1Object } from "../../asn1/Asn1Object.js";
 
 export class Attribute {
   public readonly type: string;

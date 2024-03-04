@@ -1,6 +1,6 @@
-import { UnsignedLongCoder } from "../coders/UnsignedLongCoder";
 import moment from "moment";
-import { Asn1ByteInputStream } from "./Asn1ByteInputStream";
+import { UnsignedLongCoder } from "../coders/UnsignedLongCoder.js";
+import { Asn1ByteInputStream } from "./Asn1ByteInputStream.js";
 
 export class Asn1Object {
   public readonly isTag: boolean;

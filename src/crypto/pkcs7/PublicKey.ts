@@ -1,4 +1,4 @@
-import { DigestAlgorithm } from "./DigestAlgorithm";
+import { DigestAlgorithm } from "./DigestAlgorithm.js";
 
 export interface PublicKey {
   verifySignature(

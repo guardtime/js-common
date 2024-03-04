@@ -1,6 +1,6 @@
-import { HashAlgorithm } from "../../src/hash/HashAlgorithm";
-import { DataHasher } from "../../src/hash/DataHasher";
-import { NodeDataHasher } from "../../src/hash/NodeDataHasher";
+import { HashAlgorithm } from "../../src/hash/HashAlgorithm.js";
+import { DataHasher } from "../../src/hash/DataHasher.js";
+import { NodeDataHasher } from "../../src/hash/NodeDataHasher.js";
 
 describe("Data hashers work similarly", () => {
   it("sha256 is the same", async () => {

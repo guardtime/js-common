@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 
-import { PublicKey } from "./PublicKey";
-import { DigestAlgorithm } from "./DigestAlgorithm";
+import { PublicKey } from "./PublicKey.js";
+import { DigestAlgorithm } from "./DigestAlgorithm.js";
 
 export class NodePublicKey implements PublicKey {
   private readonly publicKey: crypto.KeyObject;

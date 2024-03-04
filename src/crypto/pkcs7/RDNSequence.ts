@@ -1,6 +1,6 @@
-import { Asn1Object } from "../../asn1/Asn1Object";
-import { HexCoder } from "../../coders/HexCoder";
-import { Attribute } from "./Attribute";
+import { Asn1Object } from "../../asn1/Asn1Object.js";
+import { HexCoder } from "../../coders/HexCoder.js";
+import { Attribute } from "./Attribute.js";
 
 export class RDNSequence {
   private readonly rdns: ReadonlyArray<Asn1Object>;

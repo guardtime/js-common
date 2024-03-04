@@ -1,6 +1,6 @@
-import { HashAlgorithm } from "../../src/hash/HashAlgorithm";
-import { HexCoder } from "../../src/coders/HexCoder";
-import { HMAC } from "../../src/crypto/HMAC";
+import { HashAlgorithm } from "../../src/hash/HashAlgorithm.js";
+import { HexCoder } from "../../src/coders/HexCoder.js";
+import { HMAC } from "../../src/crypto/HMAC.js";
 
 describe("HMAC", () => {
   it("Check if uses node hmac", async () => {

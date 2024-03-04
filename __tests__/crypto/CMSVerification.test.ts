@@ -1,14 +1,14 @@
-import { Base64Coder } from "../../src/coders/Base64Coder";
-import { Utf8Converter } from "../../src/strings/Utf8Converter";
+import { Base64Coder } from "../../src/coders/Base64Coder.js";
+import { Utf8Converter } from "../../src/strings/Utf8Converter.js";
 
-import { NodeSpkiFactory } from "../../src/crypto/pkcs7/NodeSpkiFactory";
-import { Pkcs7Envelope } from "../../src/crypto/pkcs7/Pkcs7Envelope";
+import { NodeSpkiFactory } from "../../src/crypto/pkcs7/NodeSpkiFactory.js";
+import { Pkcs7Envelope } from "../../src/crypto/pkcs7/Pkcs7Envelope.js";
 import {
   Pkcs7ContentType,
   Pkcs7EnvelopeVerifier,
-} from "../../src/crypto/pkcs7/Pkcs7EnvelopeVerifier";
-import { SignedDataVerifier } from "../../src/crypto/pkcs7/SignedDataVerifier";
-import { ResultCode } from "../../src/verification/Result";
+} from "../../src/crypto/pkcs7/Pkcs7EnvelopeVerifier.js";
+import { SignedDataVerifier } from "../../src/crypto/pkcs7/SignedDataVerifier.js";
+import { ResultCode } from "../../src/verification/Result.js";
 
 const trustedCertificate =
   "MIIEkjCCA3qgAwIBAgIQCgFBQgAAAVOFc2oLheynCDANBgkqhkiG9w0BAQsFADA/" +

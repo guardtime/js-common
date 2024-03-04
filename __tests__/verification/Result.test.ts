@@ -1,4 +1,4 @@
-import { Result, ResultCode } from "../../src/verification/Result";
+import { Result, ResultCode } from "../../src/verification/Result.js";
 
 describe("Result", () => {
   it("toString works", async () => {

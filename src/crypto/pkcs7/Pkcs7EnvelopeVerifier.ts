@@ -1,6 +1,6 @@
-import { Pkcs7EnvelopeContentVerifier } from "./Pkcs7EnvelopeContentVerifier";
-import { Pkcs7Envelope } from "./Pkcs7Envelope";
-import { Result } from "../../verification/Result";
+import { Pkcs7EnvelopeContentVerifier } from "./Pkcs7EnvelopeContentVerifier.js";
+import { Pkcs7Envelope } from "./Pkcs7Envelope.js";
+import { Result } from "../../verification/Result.js";
 
 export enum Pkcs7ContentType {
   SIGNED_DATA = "1.2.840.113549.1.7.2",

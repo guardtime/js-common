@@ -1,5 +1,5 @@
-import { UnsignedLongCoder } from "../coders/UnsignedLongCoder";
-import { Asn1Object } from "./Asn1Object";
+import { UnsignedLongCoder } from "../coders/UnsignedLongCoder.js";
+import { Asn1Object } from "./Asn1Object.js";
 
 export class Asn1ByteInputStream {
   private readonly data: Uint8Array;

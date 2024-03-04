@@ -1,8 +1,8 @@
 import BigInteger from "big-integer";
-import { IssuerAndSerialNumber } from "./IssuerAndSerialNumber";
-import { AlgorithmIdentifier } from "./AlgorithmIdentifier";
-import { Attributes } from "./Attributes";
-import { Asn1Object } from "../../asn1/Asn1Object";
+import { IssuerAndSerialNumber } from "./IssuerAndSerialNumber.js";
+import { AlgorithmIdentifier } from "./AlgorithmIdentifier.js";
+import { Attributes } from "./Attributes.js";
+import { Asn1Object } from "../../asn1/Asn1Object.js";
 
 export class SignerInfo {
   public readonly version: BigInteger.BigInteger;

@@ -1,8 +1,8 @@
-import { NodePublicKey } from "./NodePublicKey";
 import crypto from "node:crypto";
-import { SpkiFactory } from "./SpkiFactory";
-import { PublicKey } from "./PublicKey";
-import { SubjectPublicKeyInfo } from "./SubjectPublicKeyInfo";
+import { NodePublicKey } from "./NodePublicKey.js";
+import { SpkiFactory } from "./SpkiFactory.js";
+import { PublicKey } from "./PublicKey.js";
+import { SubjectPublicKeyInfo } from "./SubjectPublicKeyInfo.js";
 
 export class NodeSpkiFactory implements SpkiFactory {
   public async create(spki: SubjectPublicKeyInfo): Promise<PublicKey> {

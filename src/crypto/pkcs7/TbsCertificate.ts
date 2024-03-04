@@ -1,8 +1,8 @@
 import BigInteger from "big-integer";
 import moment from "moment/moment";
-import { RDNSequence } from "./RDNSequence";
-import { Asn1Object } from "../../asn1/Asn1Object";
-import { SubjectPublicKeyInfo } from "./SubjectPublicKeyInfo";
+import { RDNSequence } from "./RDNSequence.js";
+import { Asn1Object } from "../../asn1/Asn1Object.js";
+import { SubjectPublicKeyInfo } from "./SubjectPublicKeyInfo.js";
 
 export class TbsCertificate {
   public readonly version: BigInteger.BigInteger;
