@@ -1,40 +1,34 @@
 import moment from "moment";
 import { UnsignedLongCoder } from "../coders/UnsignedLongCoder.js";
-import { Asn1ByteInputStream } from "./Asn1ByteInputStream.js";
+import ASN1 from "@lapo/asn1js";
 
 export class Asn1Object {
-  public readonly isTag: boolean;
-  public readonly type: number;
-  private readonly value: Uint8Array;
-  private readonly bytes: Uint8Array;
+  public get isTag(): boolean {
+    return this.asn1.tag.tagClass === 2 && this.asn1.tag.tagConstructed;
+  }
 
-  public constructor(
-    isTag: boolean,
-    bytes: Uint8Array,
-    type: number,
-    value: Uint8Array,
-  ) {
-    this.isTag = isTag;
-    this.bytes = new Uint8Array(bytes);
-    this.type = type;
-    this.value = new Uint8Array(value);
+  public get type(): number {
+    return this.asn1.tag.tagNumber;
+  }
+
+  private asn1: ASN1;
+
+  private constructor(asn1: ASN1) {
+    this.asn1 = asn1;
   }
 
   static createFromBytes(bytes: Uint8Array): Asn1Object {
-    const stream = new Asn1ByteInputStream(bytes);
-    const obj = stream.readAsn1Object();
-    if (stream.getPosition() !== stream.getLength()) {
-      throw new Error("Unexpected input data: too many bytes");
-    }
-
-    return obj;
+    return new Asn1Object(ASN1.decode(bytes));
   }
 
   parseValueAsChildren() {
-    const children: Asn1Object[] = [];
-    const stream = new Asn1ByteInputStream(this.value);
-    while (stream.getPosition() < stream.getLength()) {
-      children.push(stream.readAsn1Object());
+    if (!this.asn1.sub) {
+      return [];
+    }
+
+    const children = new Array<Asn1Object>();
+    for (const child of this.asn1.sub) {
+      children.push(new Asn1Object(child));
     }
 
     return children;
@@ -42,7 +36,7 @@ export class Asn1Object {
 
   parseValueAsObjectIdentifier(): string {
     const result = [];
-    const firstByte = this.value.at(0);
+    const firstByte = this.asn1.stream.enc.at(this.asn1.posContent()) as number;
     if (firstByte === undefined) {
       throw new Error("Invalid value for object identifier: Not enough bytes");
     }
@@ -50,9 +44,9 @@ export class Asn1Object {
     result.push(first);
     result.push(firstByte - first * 40);
     let value = 0;
-    let position = 1;
-    while (position < this.value.length) {
-      const byte = this.value.at(position++);
+    let position = this.asn1.posContent() + 1;
+    while (position < this.asn1.posEnd()) {
+      const byte = this.asn1.stream.enc.at(position++) as number;
       if (byte === undefined) {
         throw new Error(
           "Invalid value for object identifier: Not enough bytes",
@@ -69,11 +63,22 @@ export class Asn1Object {
   }
 
   parseValueAsInteger() {
-    return UnsignedLongCoder.decode(this.value);
+    return UnsignedLongCoder.decode(
+      (this.asn1.stream.enc as Uint8Array).subarray(
+        this.asn1.posContent(),
+        this.asn1.posEnd(),
+      ),
+    );
   }
 
   parseValueAsAscii(): string {
-    return String.fromCharCode.apply(null, this.value);
+    return String.fromCharCode.apply(
+      null,
+      (this.asn1.stream.enc as Uint8Array).subarray(
+        this.asn1.posContent(),
+        this.asn1.posEnd(),
+      ),
+    );
   }
 
   parseValueAsUtcTime(): moment.Moment {
@@ -97,17 +102,30 @@ export class Asn1Object {
   }
 
   parseValueAsBytes(): Uint8Array {
-    return new Uint8Array(this.value);
+    return (this.asn1.stream.enc as Uint8Array).subarray(
+      this.asn1.posContent(),
+      this.asn1.posEnd(),
+    );
   }
 
   parseValueBitStringAsBytes(): Uint8Array {
-    const padding = this.value.at(0) as number;
-    const bytes = new Uint8Array(this.value.subarray(1));
+    (this.asn1.stream.enc as Uint8Array).subarray(
+      this.asn1.posContent(),
+      this.asn1.posEnd(),
+    );
+    const padding = this.asn1.stream.enc.at(this.asn1.posContent()) as number;
+    const bytes = (this.asn1.stream.enc as Uint8Array).subarray(
+      this.asn1.posContent() + 1,
+      this.asn1.posEnd(),
+    );
     bytes.set([(bytes.at(-1) as number) << padding], bytes.length - 1);
     return bytes;
   }
 
   getBytes(): Uint8Array {
-    return new Uint8Array(this.bytes);
+    return (this.asn1.stream.enc as Uint8Array).subarray(
+      this.asn1.posStart(),
+      this.asn1.posEnd(),
+    );
   }
 }

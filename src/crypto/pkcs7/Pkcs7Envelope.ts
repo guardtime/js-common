@@ -1,5 +1,4 @@
 import { Asn1Object } from "../../asn1/Asn1Object.js";
-
 import { SignedData } from "./SignedData.js";
 import { Pkcs7ContentType } from "./Pkcs7EnvelopeVerifier.js";
 

@@ -45,7 +45,11 @@ export class Certificate {
     this.signature = new Uint8Array(children[2].parseValueBitStringAsBytes());
   }
 
-  public isValidAt(time: moment.Moment) {
+  public isValidAt(time: moment.Moment): boolean {
     return this.tbsCertificate.isValidAt(time);
+  }
+
+  public isValidAtUnixTime(time: number): boolean {
+    return this.tbsCertificate.isValidAt(moment.unix(time));
   }
 }

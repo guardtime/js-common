@@ -113,8 +113,6 @@ export class SignedDataVerifier
 
     // Check if message digest are correct
     for (const attribute of messageDigests) {
-      //switch (signer.digestAlgorithm.identifier);
-
       const result = DigestAlgorithm.getDigestAlgorithm(
         signer.digestAlgorithm.identifier,
       ).digest(signedData);
@@ -316,10 +314,6 @@ export class SignedDataVerifier
     const certificate = link.certificate;
     for (const parentChainLink of link.parents) {
       const parentCertificate = parentChainLink.certificate;
-      if (!parentCertificate.subject.equals(certificate.issuer)) {
-        continue;
-      }
-
       const publicKey = await this.publicKeyFactory.create(
         parentCertificate.getSubjectPublicKeyInfo(),
       );
