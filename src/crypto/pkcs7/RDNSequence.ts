@@ -64,7 +64,7 @@ export class RDNSequence {
       case "OU":
         return "2.5.4.11";
       case "E":
-        return "E";
+        return "1.2.840.113549.1.9.1";
       default:
         throw new Error("Unknown selector");
     }
