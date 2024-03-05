@@ -25,6 +25,7 @@ export class DigestAlgorithm {
 
   static getDigestAlgorithm(oid: string) {
     switch (oid) {
+      case "1.2.840.113549.1.1.5":
       case "1.3.14.3.2.26":
         return DigestAlgorithm.SHA1;
       case "1.2.840.113549.1.1.11":
