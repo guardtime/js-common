@@ -320,7 +320,7 @@ export class SignedDataVerifier
 
       if (
         await publicKey.verifySignature(
-          this.getSignatureDigestAlgorithm(certificate.signatureAlgorithm),
+          DigestAlgorithm.getDigestAlgorithm(certificate.signatureAlgorithm),
           certificate.getTbsCertificateBytes(),
           certificate.getSignatureBytes(),
         )
@@ -341,25 +341,14 @@ export class SignedDataVerifier
     );
   }
 
-  private getSignatureDigestAlgorithm(algorithm: string) {
-    switch (algorithm) {
-      case "1.2.840.113549.1.1.11":
-        return DigestAlgorithm.SHA256;
-      case "1.2.840.113549.1.1.12":
-        return DigestAlgorithm.SHA384;
-      case "1.2.840.113549.1.1.13":
-        return DigestAlgorithm.SHA512;
-      default:
-        throw new Error("Unsupported digest algorithm");
-    }
-  }
-
+  // TODO: Fix certificate chain building
   private buildCertificateChain(
     certificate: Certificate,
     certificates: ReadonlyArray<Certificate>,
   ): ChainLink {
-    const parents = certificates.filter((parent) =>
-      parent.subject.equals(certificate.issuer),
+    const parents = certificates.filter(
+      (parent) =>
+        parent.subject.equals(certificate.issuer) && parent !== certificate,
     );
 
     if (parents.length === 0) {
@@ -377,7 +366,10 @@ export class SignedDataVerifier
     return {
       certificate,
       parents: parents.map((parent) =>
-        this.buildCertificateChain(parent, certificates),
+        this.buildCertificateChain(
+          parent,
+          certificates.filter((cert) => cert === certificate),
+        ),
       ),
     };
   }

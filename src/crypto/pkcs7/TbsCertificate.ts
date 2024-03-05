@@ -19,26 +19,31 @@ export class TbsCertificate {
 
   public constructor(obj: Asn1Object) {
     const children = obj.parseValueAsChildren();
-    this.version = children[0]
-      .parseValueAsChildren()
-      .at(0)
-      ?.parseValueAsInteger() as BigInteger.BigInteger;
-    this.serialNumber = children[1].parseValueAsInteger();
-    this.algorithm = children[2]
+    let i = 0;
+    if (children[0].isTag && children[0].type === 0) {
+      this.version = children[i++]
+        .parseValueAsChildren()
+        .at(0)
+        ?.parseValueAsInteger() as BigInteger.BigInteger;
+    } else {
+      this.version = BigInteger(1);
+    }
+    this.serialNumber = children[i++].parseValueAsInteger();
+    this.algorithm = children[i++]
       .parseValueAsChildren()
       .at(0)
       ?.parseValueAsObjectIdentifier() as string;
-    this.issuer = new RDNSequence(children[3]);
-    const validity = children[4].parseValueAsChildren();
+    this.issuer = new RDNSequence(children[i++]);
+    const validity = children[i++].parseValueAsChildren();
     this.validity = {
       notBefore: validity[0].parseValueAsTime(),
       notAfter: validity[1].parseValueAsTime(),
     };
-    this.subject = new RDNSequence(children[5]);
-    this.subjectPublicKeyInfo = new SubjectPublicKeyInfo(children[6]);
-    const extensions = children.at(7);
+    this.subject = new RDNSequence(children[i++]);
+    this.subjectPublicKeyInfo = new SubjectPublicKeyInfo(children[i++]);
+    const extensions = children.at(i);
     if (extensions?.isTag && extensions?.type === 3) {
-      this.extensions = children[5].getBytes();
+      this.extensions = children[i].getBytes();
     }
   }
 
