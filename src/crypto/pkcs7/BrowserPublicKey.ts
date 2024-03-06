@@ -1,4 +1,4 @@
-import crypto from "node:crypto";
+const { subtle } = globalThis.crypto;
 import { SubjectPublicKeyInfo } from "./SubjectPublicKeyInfo.js";
 import { PublicKey } from "./PublicKey.js";
 import { DigestAlgorithm } from "./DigestAlgorithm.js";
@@ -15,7 +15,7 @@ export class BrowserPublicKey implements PublicKey {
     data: Uint8Array,
     signature: Uint8Array,
   ): Promise<boolean> {
-    const publicKey = await crypto.subtle.importKey(
+    const publicKey = await subtle.importKey(
       "spki",
       this.publicKeyInfo.getBytes(),
       this.getSpkiAlgorithmParams(this.publicKeyInfo.algorithm, algorithm),
@@ -23,12 +23,7 @@ export class BrowserPublicKey implements PublicKey {
       ["verify"],
     );
 
-    return crypto.subtle.verify(
-      publicKey.algorithm.name,
-      publicKey,
-      signature,
-      data,
-    );
+    return subtle.verify(publicKey.algorithm.name, publicKey, signature, data);
   }
 
   private getSpkiAlgorithmParams(
