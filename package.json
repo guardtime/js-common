@@ -1,7 +1,7 @@
 {
   "name": "@guardtime/common",
   "sideEffects": false,
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "A grab bag of common utilities, data models and other functionality.",
   "license": "Apache-2.0",
   "repository": {
@@ -21,33 +21,34 @@
     "lint:fix": "eslint \"src/**/*.ts\" \"__tests__/**/*.ts\" --fix"
   },
   "jest": {
+    "preset": "ts-jest",
     "testRegex": "/__tests__/.*\\.test\\.ts$",
     "moduleNameMapper": {
       "^(\\.\\.?/.*)\\.js$": "$1"
     }
   },
   "dependencies": {
-    "@types/base64-js": "^1.3.0",
-    "@types/node-forge": "^1.0.1",
-    "rfc4648": "^1.5.1",
+    "rfc4648": "^1.5.3",
     "base64-js": "^1.5.1",
-    "big-integer": "^1.6.51",
-    "node-forge": "git+https://github.com/martti007/forge-1.git"
+    "big-integer": "^1.6.52",
+    "moment": "^2.30.1",
+    "@noble/hashes": "^1.3.3",
+    "@lapo/asn1js": "^1.2.4"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.16.7",
-    "@babel/plugin-transform-runtime": "^7.17.0",
-    "@babel/preset-env": "^7.16.11",
-    "@babel/preset-typescript": "^7.16.7",
-    "@types/jest": "^27.4.1",
-    "@typescript-eslint/eslint-plugin": "^5.17.0",
-    "@typescript-eslint/parser": "^5.17.0",
+    "@types/lapo__asn1js": "^1.2.5",
+    "@types/base64-js": "^1.3.2",
+    "@types/jest": "^29.5.12",
+    "eslint-plugin-import": "^2.29.1",
+    "jest": "^29.7.0",
+    "@typescript-eslint/eslint-plugin": "^7.1.0",
+    "@typescript-eslint/parser": "^7.1.0",
     "cross-env": "^7.0.3",
-    "eslint": "^8.12.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "jest": "^27.5.1",
-    "prettier": "^2.6.2",
-    "typescript": "^4.6.3"
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "ts-jest": "^29.1.2",
+    "prettier": "^3.2.5",
+    "typescript": "^5.3.3"
   }
 }

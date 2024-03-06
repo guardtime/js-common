@@ -1,4 +1,4 @@
-import { HashAlgorithm } from "../../src/hash/HashAlgorithm";
+import { HashAlgorithm } from "../../src/hash/HashAlgorithm.js";
 
 describe("HashAlgorithm", () => {
   test("get hash algorithm by name", () => {
@@ -27,7 +27,7 @@ describe("HashAlgorithm", () => {
         id: 1,
         length: 32,
         name: "SHA-256",
-      })
+      }),
     ).toBeTruthy();
   });
 });

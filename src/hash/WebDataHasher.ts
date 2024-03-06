@@ -26,7 +26,7 @@ import { Hasher } from "./Hasher.js";
 /**
  * Does hashing with asynchronous way
  */
-export class WebHasher implements Hasher {
+export class WebDataHasher implements Hasher {
   private readonly _algorithm: HashAlgorithm;
   private _data: Uint8Array;
 
@@ -44,7 +44,7 @@ export class WebHasher implements Hasher {
       hashAlgorithm === HashAlgorithm.RIPEMD160
     ) {
       throw new HashingError(
-        `Hash algorithm is not implemented: ${hashAlgorithm.name}.`
+        `Hash algorithm is not implemented: ${hashAlgorithm.name}.`,
       );
     }
 
@@ -55,7 +55,7 @@ export class WebHasher implements Hasher {
   /**
    * Add data for hashing
    * @param {Uint8Array} data byte array
-   * @returns {WebHasher}
+   * @returns {WebDataHasher}
    */
   update(data: Uint8Array): Hasher {
     if (!(data instanceof Uint8Array)) {
@@ -80,15 +80,15 @@ export class WebHasher implements Hasher {
       new Uint8Array(
         await window.crypto.subtle.digest(
           { name: this._algorithm.name },
-          this._data
-        )
-      )
+          this._data,
+        ),
+      ),
     );
   }
 
   /**
    * Resets the hash calculation.
-   * @returns {WebHasher} The same data hasher object object for chaining calls.
+   * @returns {WebDataHasher} The same data hasher object object for chaining calls.
    */
   reset(): Hasher {
     this._data = new Uint8Array(0);

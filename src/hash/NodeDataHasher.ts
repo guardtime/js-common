@@ -24,7 +24,7 @@ import { HashAlgorithm } from "./HashAlgorithm.js";
 import { Hasher } from "./Hasher.js";
 import { HashingError } from "./HashingError.js";
 
-export class NodeHasher implements Hasher {
+export class NodeDataHasher implements Hasher {
   private readonly _algorithm: HashAlgorithm;
   private _hasher: Hash;
 
@@ -43,7 +43,7 @@ export class NodeHasher implements Hasher {
   constructor(hashAlgorithm: HashAlgorithm) {
     if (!hashAlgorithm.isImplemented()) {
       throw new HashingError(
-        `Hash algorithm is not implemented: ${hashAlgorithm.name}.`
+        `Hash algorithm is not implemented: ${hashAlgorithm.name}.`,
       );
     }
 
@@ -58,7 +58,7 @@ export class NodeHasher implements Hasher {
   async digest(): Promise<DataHash> {
     return DataHash.create(
       this._algorithm,
-      new Uint8Array(this._hasher.digest())
+      new Uint8Array(this._hasher.digest()),
     );
   }
 

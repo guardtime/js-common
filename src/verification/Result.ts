@@ -39,7 +39,7 @@ export class Result<Error> {
     ruleName: string,
     resultCode: ResultCode,
     verificationError: Error | null = null,
-    childResults: Result<Error>[] | null = null
+    childResults: ReadonlyArray<Result<Error>> | null = null,
   ) {
     this.ruleName = ruleName;
     this.resultCode = resultCode;
@@ -52,7 +52,7 @@ export class Result<Error> {
 
   public static CREATE_FROM_RESULTS<T>(
     ruleName: string,
-    childResults: Result<T>[]
+    childResults: ReadonlyArray<Result<T>>,
   ): Result<T> {
     const lastResult: Result<T> =
       childResults.length > 0
@@ -63,7 +63,7 @@ export class Result<Error> {
       ruleName,
       lastResult.resultCode,
       lastResult.verificationError,
-      childResults
+      childResults,
     );
   }
 

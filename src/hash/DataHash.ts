@@ -17,7 +17,7 @@ export class DataHash implements IDataHash {
     const algorithm = HashAlgorithm.getById(bytes[0]);
     if (algorithm === null) {
       throw new HashingError(
-        `Imprint contains invalid hash algorithm id: ${bytes[0]}.`
+        `Imprint contains invalid hash algorithm id: ${bytes[0]}.`,
       );
     }
 
@@ -26,7 +26,7 @@ export class DataHash implements IDataHash {
     this.value = this.imprint.slice(1);
     if (this.value.length != this.hashAlgorithm.length) {
       throw new HashingError(
-        "Imprint digest length does not match with algorithm."
+        "Imprint digest length does not match with algorithm.",
       );
     }
 

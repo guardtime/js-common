@@ -7,6 +7,5 @@ node_modules/
 src/
 __tests__/
 .eslintrc.json
-.babelrc
 tsconfig.json
 

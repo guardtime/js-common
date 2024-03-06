@@ -9,24 +9,21 @@ export class NodeHMAC {
    * @param {Uint8Array} data
    * @returns {Promise.<Uint8Array, Error>}
    */
-  static async digest(
+  public static async digest(
     algorithm: HashAlgorithm,
     key: Uint8Array,
-    data: Uint8Array
+    data: Uint8Array,
   ): Promise<Uint8Array> {
     if (!algorithm.isImplemented()) {
       throw new HashingError(
-        `Hash algorithm is not implemented: ${algorithm.name}.`
+        `Hash algorithm is not implemented: ${algorithm.name}.`,
       );
     }
 
     try {
-      const hmacHasher = crypto.createHmac(
-        algorithm.name.replace("-", ""),
-        key
-      );
-      hmacHasher.update(Buffer.from(data));
-      return new Uint8Array(hmacHasher.digest());
+      const hasher = crypto.createHmac(algorithm.name.replace("-", ""), key);
+      hasher.update(Buffer.from(data));
+      return new Uint8Array(hasher.digest());
     } catch (e) {
       throw new HashingError(e);
     }

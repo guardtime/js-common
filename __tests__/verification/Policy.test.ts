@@ -1,6 +1,6 @@
-import { Rule } from "../../src/verification/Rule";
-import { Result, ResultCode } from "../../src/verification/Result";
-import { Policy } from "../../src/verification/Policy";
+import { Rule } from "../../src/verification/Rule.js";
+import { Result, ResultCode } from "../../src/verification/Result.js";
+import { Policy } from "../../src/verification/Policy.js";
 
 class TestRule extends Rule<boolean, string> {
   public constructor(name: string) {
@@ -19,19 +19,19 @@ describe("Policy", () => {
   it("works", async () => {
     const policy = new Policy(
       new TestRule("FIRST").onAny(
-        new TestRule("SECOND").onFailure(new TestRule("THIRD"))
-      )
+        new TestRule("SECOND").onFailure(new TestRule("THIRD")),
+      ),
     );
     let result = await policy.verify(true);
     expect(result.getResultCode()).toEqual(ResultCode.FAIL);
     expect(
-      result.getChildResults().map((child) => child.getRuleName())
+      result.getChildResults().map((child) => child.getRuleName()),
     ).toEqual(["FIRST", "SECOND", "THIRD"]);
 
     result = await policy.verify(false);
     expect(result.getResultCode()).toEqual(ResultCode.OK);
     expect(
-      result.getChildResults().map((child) => child.getRuleName())
+      result.getChildResults().map((child) => child.getRuleName()),
     ).toEqual(["FIRST", "SECOND"]);
   });
 });

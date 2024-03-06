@@ -15,7 +15,7 @@ export class Base32Coder {
 
     if ((base32EncodedString.length * 5) % 8 !== 0) {
       throw new Error(
-        "base32EncodedString is not of the proper length. Please verify padding."
+        "base32EncodedString is not of the proper length. Please verify padding.",
       );
     }
 

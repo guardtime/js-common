@@ -1,4 +1,4 @@
-import { Result, ResultCode } from "../../src/verification/Result";
+import { Result, ResultCode } from "../../src/verification/Result.js";
 
 describe("Result", () => {
   it("toString works", async () => {
@@ -10,7 +10,7 @@ describe("Result", () => {
     expect(result.toString()).toEqual(
       "VerificationResult TEST_RULE [OK]:\n" +
         "    VerificationResult TEST_CHILD_RULE_1 [FAIL]: test error\n" +
-        "    VerificationResult TEST_CHILD_RULE_2 [OK]"
+        "    VerificationResult TEST_CHILD_RULE_2 [OK]",
     );
   });
 });
