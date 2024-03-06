@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.0.0] - 2024-03-01
+### Changed
+- Removed node-forge dependency
+- Add new hashing library
+- Add PKCS#7 verification.
+
 ## [1.0.3] - 2020-11-02
 ### Added
 - Added base32 encoder
@@ -34,12 +40,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - Sync and async hasher and connected data objects
   - Verification result data model
   - UTF8 encoder and decoder
-  - HashAlgorithm getByName is incasesensitive and allows to get
+  - HashAlgorithm getByName is case insensitive and allows to get
     SHA-256 with the name of DEFAULT.
-## [2.0.0] - 2024-03-01
-### Changed
-  - Removed node-forge dependency, add new hashing library. Also added
-    PKCS#7 verification.
 
 [Unreleased]: https://github.com/guardtime/js-common/tree/master
 [1.0.0]: https://github.com/guardtime/js-common/tree/v1.0.0
